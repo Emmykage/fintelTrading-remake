@@ -5,6 +5,16 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  render: {
+    injectScripts: true
+  },
+  inject: [
+    {
+      src: 'https://example.com/cryptohopper-script.js',
+      body: true
+    }
+  ]
+,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'fintelTrading',
@@ -19,6 +29,20 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      {
+        id: 'tawk',
+        src: '/js/chatbot.js'
+      },
+      {
+        id: 'tradingview',
+        src: 'https://www.cryptohopper.com/widgets/js/script'
+      },
+      {
+        id: "news",
+        src:"https://www.cryptohopper.com/widgets/js/script"
+      }
     ]
   },
 

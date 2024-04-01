@@ -61,10 +61,10 @@
 </template>
 
 <script>
-import Graph4 from '@/components/Graph4.vue'
+// import Graph4 from '@/components/Graph4.vue'
 export default {
   components: {
-    Graph4
+    // Graph4
   },
   layout: 'dashboards',
   data() {

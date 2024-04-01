@@ -1,15 +1,15 @@
 <template>
   <div class="w-full">
-      <DoughnutChart :height="200" :options="options" :chartdata="chartdata" />
+      <!-- <DoughnutChart :height="200" :options="options" :chartdata="chartdata" /> -->
   </div>
 </template>
 
 <script>
-import DoughnutChart from '~/components/charts/DoughnutChart.vue';
+// import DoughnutChart from '~/components/charts/DoughnutChart.vue';
 
 export default {
   components: {
-    DoughnutChart
+    // DoughnutChart
   },
   data() {
     return {
