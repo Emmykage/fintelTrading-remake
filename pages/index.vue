@@ -180,7 +180,7 @@
         <p class="flex-1 text-center dark:text-gray-400">
           Offer valid for limited period
         </p>
-        <button type="button" class="px-8 py-2 font-semibold rounded-full dark:bg-violet-400 dark:text-gray-900" @click="$bvModal.hide('bv-modal-example')">
+        <button type="button" class="px-7 py-2 font-semibold rounded-full dark:bg-violet-400 dark:text-gray-900" @click="$bvModal.hide('bv-modal-example')">
           Continue
         </button>
       </div>
