@@ -52,7 +52,17 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/bootstrap-vue.client'
+    { src: '~/plugins/vue-carousel.js', mode: 'client' },
+    { src: '~/plugins/toastr.js', mode: 'client' },
+    { src: '~/plugins/enlargeImage.js', mode: 'client' },
+    { src: '~/plugins/slider.js', mode: 'client' },
+    { src: '~/plugins/trading-view.js', mode: 'client' },
+    '~/plugins/bootstrap-vue.client',
+    { src: '@/plugins/aos', mode: 'client' },
+    {
+      src: '~/plugins/tawk-messenger.client.js',
+      mode: 'client'
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

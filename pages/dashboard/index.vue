@@ -12,7 +12,7 @@
               Account Balance
             </h1>
             <p class="text-gray-400 text-xl">
-              <span class="text-xl text-gray-900">{{ formatNumberAsDollar(userData?.accountBalance) ?? '0.00' }}</span>
+              <span class="text-xl text-gray-900">{{ formatNumberAsDollar(wallet?.balance) ?? '0.00' }}</span>
             </p>
           </div>
           <div>
@@ -127,11 +127,15 @@
 
 <script>
 export default {
+  components: {
+
+  },
   layout: 'user-dashboard',
   data() {
     return {
       loading: false,
       userData: {},
+      wallet: {},
       loadingTransactions: false,
       transactionsList: [],
       assetsList: [
@@ -156,7 +160,9 @@ export default {
   },
   mounted() {
     this.getUserInfo()
-    this.fetchTransactions()
+    // this.fetchTransactions()
+
+    // console.log(baseUrl)
   },
   methods: {
     async getUserInfo() {
@@ -183,21 +189,24 @@ export default {
       `
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}wallet`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+          // body: JSON.stringify({
+          //   query
+          // })
+        }).then(res => res.json())
+
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
-          this.userData = data.data.getUser
+          this.userData = response.wallet.user
+          this.wallet = response.wallet
+          this.transactionsList = response.wallet.transactions
+
         }
       } finally {
         this.loading = false
@@ -250,7 +259,7 @@ export default {
         if (data?.errors) {
           this.$toastr.e(data.errors[0].message)
         } else {
-          this.transactionsList = data.data.getUsersTransactions
+          this.transactionsList = response.wallet.transactions
         }
       } finally {
         this.loadingTransactions = false

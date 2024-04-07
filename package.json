@@ -10,14 +10,20 @@
   },
   "dependencies": {
     "@diracleo/vue-enlargeable-image": "^0.0.7",
+    "@tawk.to/tawk-messenger-vue-2": "^1.0.3",
+    "aos": "^2.3.4",
+    "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
+    "vue-carousel": "^0.18.0",
+    "vue-marquee-slider": "^1.0.6",
     "vue-server-renderer": "^2.7.10",
     "vue-sweetalert2": "^5.0.5",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "vue-toastr": "^2.1.2"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.4",

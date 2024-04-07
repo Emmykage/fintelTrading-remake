@@ -49,7 +49,7 @@
                 First Name
               </label>
 
-              <input id="FirstName" v-model="form.first_name" type="text" name="first_name"
+              <input id="FirstName" v-model="user.first_name" type="text" name="first_name"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
 
@@ -58,7 +58,7 @@
                 Last Name
               </label>
 
-              <input id="LastName" v-model="form.last_name" type="text" name="last_name"
+              <input id="LastName" v-model="user.last_name" type="text" name="last_name"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
 
@@ -67,7 +67,7 @@
                 Email
               </label>
 
-              <input id="Email" v-model="form.email" type="email" name="email"
+              <input id="Email" v-model="user.email" type="email" name="email"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
 
@@ -76,7 +76,7 @@
                 Password
               </label>
 
-              <input id="Password" v-model="form.password" type="password" name="password"
+              <input id="Password" v-model="user.password" type="password" name="password"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
             <div class="col-span-6">
@@ -84,7 +84,7 @@
                 Referral Code
               </label>
 
-              <input id="referralCode" v-model="form.referralCode" type="text" name="referralCode"
+              <input id="referralCode" v-model="user.referralCode" type="text" name="referralCode"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
             <!--
@@ -124,13 +124,14 @@
 </template>
 
 <script>
+import {baseUrl} from '~/assets/api/baseUrl'
 export default {
   layout: 'authLayout',
   data() {
     return {
       processing: false,
       formBusy: false,
-      form: {
+      user: {
         first_name: '',
         last_name: '',
         email: '',
@@ -142,10 +143,10 @@ export default {
   computed: {
     isFormEmpty() {
       return !!(
-        this.form.first_name &&
-        this.form.last_name &&
-        this.form.email &&
-        this.form.password
+        this.user.first_name &&
+        this.user.last_name &&
+        this.user.email &&
+        this.user.password
       )
     }
   },
@@ -153,40 +154,21 @@ export default {
     async handleSubmit() {
       this.formBusy = true
       try {
-        const signupMutation = `
-          mutation newUser($input: NewUser!) {
-            newUser(input: $input) {
-                  jwt
-            }
-          }
-        `
 
-        const response = await fetch(
-          '',
+        const response = await fetch( `${baseUrl}users`,
           {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
             },
-            body: JSON.stringify({
-              query: signupMutation,
-              variables: {
-                input: {
-                  firstName: this.form.first_name,
-                  lastName: this.form.last_name,
-                  email: this.form.email,
-                  password: this.form.password,
-                  referralCode: this.form.referralCode
-                }
-              }
-            })
+            body: JSON.stringify({user: this.user})
           }
         )
         const data = await response.json()
         if (data?.errors) {
           this.$toastr.e(data.errors[0].message)
         } else {
-          window.localStorage.setItem('auth', JSON.stringify(data?.data?.newUser?.jwt))
+          window.localStorage.setItem('auth', JSON.stringify(data?.data?.newUser?.token))
           window.localStorage.setItem('user', JSON.stringify(data?.data?.newUser?.user))
           this.$toastr.s('Signup was successful')
           this.$router.push('/login')

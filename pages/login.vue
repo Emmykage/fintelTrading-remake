@@ -5,15 +5,15 @@
         <h1 class="text-2xl font-bold text-center">
           Login
         </h1>
-        <form class="space-y-10" @submit.prevent="login">
+        <form class="space-y-10" @submit.prevent="handleSubmit">
           <div class="space-y-1 text-sm w-full">
             <label for="email" class="block text-gray-900 font-medium">Email</label>
-            <input id="email" v-model="form.email" type="email" name="email" placeholder="email"
+            <input id="email" v-model="user.email" type="email" name="email" placeholder="email"
               class="border w-full outline-none px-4 py-3 rounded-md border-gray-900 text-gray-900">
           </div>
           <div class="space-y-1 text-sm w-full relative">
             <label for="password" class="block text-gray-900 font-medium">Password</label>
-            <input id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'" name="password"
+            <input id="password" v-model="user.password" :type="showPassword ? 'text' : 'password'" name="password"
               placeholder="Password"
               class="border w-full outline-none px-4 py-3 rounded-md border-gray-900 text-gray-900">
             <img @click="showPassword = !showPassword" :src="require(`@/assets/icons/${eye}`)" alt=""
@@ -46,13 +46,17 @@
 </template>
 
 <script>
+// import {loginUser} from '~/service/apiFetch.js'
+import { baseUrl } from '~/assets/api/baseUrl';
+
 export default {
+  // components:{loginUser},
   layout: 'authLayout',
   data() {
     return {
       processing: false,
       showPassword: false,
-      form: {
+      user: {
         email: '',
         password: ''
       }
@@ -60,7 +64,7 @@ export default {
   },
   computed: {
     isFormEmpty() {
-      return !!(this.form.email && this.form.password)
+      return !!(this.user.email && this.user.password)
     },
     eye() {
       return !this.showPassword ? 'eye-close.svg' : 'eye-open.svg'
@@ -76,57 +80,41 @@ export default {
     }
   },
   methods: {
-    async login() {
+
+    async handleSubmit(){
+
+      // console.log(this.user.email, baseUrl)
+
       this.processing = true
-      const loginMutation = `
-          mutation {
-            userLogin(email: "${this.form.email}", password: "${this.form.password}") {
-                  jwt
-                  user {
-                    id
-                    firstName
-                    lastName
-                    email
-                    Status
-                    PlanType
-                    accountBalance
-                    tradingBalance
-                    profit
-                    eth
-                    btc
-                    timeAdded
-                  }
-             }
-        }
-        `
       try {
-        const response = await fetch(
-          '', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify({
-            query: loginMutation,
-            variables: {
-              email: this.form.email,
-              password: this.form.password
-            }
-          })
-        }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
-        } else {
-          window.localStorage.setItem('auth', JSON.stringify(data?.data?.userLogin?.jwt))
-          window.localStorage.setItem('user', JSON.stringify(data?.data?.userLogin?.user))
-          this.$toastr.s('Login was successful')
-          this.$router.push('/dashboard')
-        }
-      } finally {
-        this.processing = false
-      }
+    const response = await fetch(`${baseUrl}users/login`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({user: this.user})}
+    ).then(res => res.json() )
+
+    const data = response
+    console.log(data)
+
+    if (data?.errors) {
+      this.$toastr.e(data.errors[0].message)
+    } else {
+
+      window.localStorage.setItem('auth', JSON.stringify(data?.token))
+      window.localStorage.setItem('user', JSON.stringify(data?.user))
+      this.$toastr.s('Login was successful')
+      this.$router.push('/dashboard')
+      // return response.data;
+
+    }
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+
     }
   }
 

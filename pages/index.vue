@@ -12,6 +12,9 @@
         <div>
           <h2 class="lg:text-3xl text-2xl font-bold text-center sm:text-5xl dark:text-gray-50">
             Why choose Fintel Values?
+
+
+
           </h2>
           <p class="mx-auto mt-4 text-sm text-center text-white">
             We use state-of-the-art security measures when handling your account details and personal funds. Your information is SSL encrypted and safely stored.
@@ -196,6 +199,8 @@
 import PortfolioSection from '@/components/PortfolioSection.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import AdvertCTA from '@/components/AdvertCTA.vue'
+import {baseUrl} from '~/assets/api/baseUrl'
+
 import UpdatedTestimonials from '../components/UpdatedTestimonials.vue';
 export default {
   name: 'IndexPage',
@@ -233,6 +238,8 @@ export default {
   },
   mounted () {
     this.startSlider()
+    console.log(baseUrl)
+
     // this.$bvModal.show('bv-modal-example')
   },
   unmounted () {

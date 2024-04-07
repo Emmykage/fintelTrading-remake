@@ -264,7 +264,7 @@ export default {
         if (result.value) {
           window.localStorage.removeItem('user')
           window.localStorage.removeItem('auth')
-          this.$router.push('/admin')
+          // this.$router.push('/admin')
         } else {
           this.$swal('Cancelled', "You're still logged in!", 'info')
         }
