@@ -12,7 +12,7 @@
               Account Balance
             </h1>
             <p class="text-gray-400 text-xl">
-              <span class="text-xl text-gray-900">{{ formatNumberAsDollar(wallet?.balance) ?? '0.00' }}</span>
+              <span class="text-xl text-gray-900">{{ formatNumberAsDollar(wallet?.wallet_balance) ?? '0.00' }}</span>
             </p>
           </div>
           <div>
@@ -93,10 +93,10 @@
                     <tr v-for="(item, index) in transactionsList" :key="index"
                       class="border-b border-opacity-20 border-gray-700 bg-gray-900">
                       <td class="p-3">
-                        <p> {{ item?.transactionType }}</p>
+                        <p> {{ item?.transaction_type }}</p>
                       </td>
                       <td class="p-3">
-                        <p>{{ formatDateTime(item?.timeAdded) ?? 'N/A' }}</p>
+                        <p>{{ formatDateTime(item?.created_at) ?? 'N/A' }}</p>
                       </td>
                       <td class="p-3">
                         <p class="text-gray-400">
@@ -106,7 +106,7 @@
                       <td class="p-3 text-right">
                         <span class="px-3 py-1 font-semibold rounded-md text-white"
                           :class="[item?.transactionStatus === 'Approved' ? 'bg-green-500' : item?.transactionStatus === 'Pending' ? 'bg-yellow-500' : item?.transactionStatus === 'Declined' ? 'bg-red-500' : 'bg-violet-400']">
-                          <span> {{ item?.transactionStatus }}</span>
+                          <span> {{ item?.status }}</span>
                         </span>
                       </td>
                     </tr>
@@ -126,6 +126,7 @@
 </template>
 
 <script>
+import { baseUrl } from '~/assets/api/baseUrl';
 export default {
   components: {
 
@@ -160,111 +161,40 @@ export default {
   },
   mounted() {
     this.getUserInfo()
-    // this.fetchTransactions()
-
-    // console.log(baseUrl)
   },
   methods: {
     async getUserInfo() {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getUser {
-            id
-            firstName
-            lastName
-            email
-            Status
-            PlanType
-            accountBalance
-            tradingBalance
-            profit
-            eth
-            btc
-            timeAdded
-          }
-        }
-      `
 
       try {
-        const response = await fetch(`${baseUrl}wallet`, {
+        const response = await fetch(`${baseUrl}wallets`, {
           method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          // body: JSON.stringify({
-          //   query
-          // })
-        }).then(res => res.json())
+
+        })
+        .then(res => res.json())
+        console.log(response)
+
 
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
-          this.userData = response.wallet.user
-          this.wallet = response.wallet
-          this.transactionsList = response.wallet.transactions
+          this.wallet = response
+          this.transactionsList = response.transactions
+
+          console.log(response.wallet_balance)
 
         }
       } finally {
         this.loading = false
       }
     },
-    async fetchTransactions() {
-      this.loadingTransactions = true
-      const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-      this.loadingTransactions = true
-      const query = `
-        query {
-          getUsersTransactions {
-            id
-            amount
-            wallet
-            transactionType
-            transactionStatus
-            user {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-            proof
-            timeAdded
-          }
-        }
-      `
 
-      try {
-        const response = await fetch('', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            authorization: 'Bearer ' + accessToken
-          },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
-        } else {
-          this.transactionsList = response.wallet.transactions
-        }
-      } finally {
-        this.loadingTransactions = false
-      }
-    },
     formatNumberAsDollar(number) {
       return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
     },

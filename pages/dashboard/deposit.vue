@@ -10,8 +10,11 @@
         </p>
       </div>
       <div v-if="!loadingAdminInfo" class="p-10 space-y-6">
+
+
         <div v-for="{ name, code } in computed_wallet_info" :key="name"
           class="flex items-center justify-between w-full gap-x-6">
+
           <div class="space-y-1 w-full">
             <label class="text-xs text-gray-700 font-medium">{{ name }}</label>
             <input ref="myinput" readonly :value="code"
@@ -100,6 +103,8 @@
 </template>
 
 <script>
+import { baseUrl } from '~/assets/api/baseUrl';
+
 export default {
   layout: 'user-dashboard',
   data() {
@@ -129,11 +134,11 @@ export default {
         ? [
           {
             name: 'Bitcoin',
-            code: this.adminData?.admin?.btc ?? 'N/A'
+            code: this.adminData?.admin?.btc ?? '1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71.'
           },
           {
             name: 'Ethereum erc-20',
-            code: this.adminData?.admin?.eth ?? 'N/A'
+            code: this.adminData?.admin?.eth ?? '0xb794f5ea0ba39494ce839613fffba74279579268'
           },
           {
             name: 'Bank Account',
@@ -183,13 +188,12 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       try {
-        const withdrawalMutation = `
-          mutation newTransaction($input: NewTransaction!) {
-            newTransaction(input: $input)
-          }
-        `
-        const response = await fetch(
-          '',
+        // const withdrawalMutation = `
+        //   mutation newTransaction($input: NewTransaction!) {
+        //     newTransaction(input: $input)
+        //   }
+        // `
+        const response = await fetch(`${baseUrl}transactions`,
           {
             method: 'POST',
             headers: {
@@ -197,26 +201,27 @@ export default {
               authorization: 'Bearer ' + accessToken
             },
             body: JSON.stringify({
-              query: withdrawalMutation,
-              variables: {
-                input: {
+
+                transaction: {
                   amount: this.form.amount,
-                  transactionType: 'Deposit',
-                  proof: this.form.proof,
-                  wallet: this.computedWalletAddress
+                  transaction_type: 'deposit',
+                  status: "pending",
+                  // proof: this.form.proof,
+                  address: this.computedWalletAddress,
+                  coin_type: this.form.depositType
                 }
-              }
+
             })
           }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+        ).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
+
           this.$toastr.s('You have successfully initiated transaction')
           this.form.amount = ''
           this.form.depositType = ''
-          this.form.proof = ''
+          this.form.proof = '' //correct this later
           this.computedWalletAddress = ''
         }
       } finally {
@@ -253,26 +258,29 @@ export default {
       `
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}users/account`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+          // body: JSON.stringify({
+          //   query
+          // })
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
-          this.adminData = data.data.getUser
+          this.adminData = response.user
+          // console.log(this.adminData)
+
         }
       } finally {
         this.loadingAdminInfo = false
       }
+
     }
+
   }
 }
 </script>

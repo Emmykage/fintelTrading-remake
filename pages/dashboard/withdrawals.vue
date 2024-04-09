@@ -50,6 +50,7 @@
 
 <script>
 import ApiLoader from '@/components/ApiLoader.vue'
+import {baseUrl} from "~/assets/api/baseUrl"
 export default {
   components: { ApiLoader },
   layout: 'user-dashboard',
@@ -121,13 +122,12 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       try {
-        const withdrawalMutation = `
-          mutation newTransaction($input: NewTransaction!) {
-            newTransaction(input: $input)
-          }
-        `
-        const response = await fetch(
-          '',
+        // const withdrawalMutation = `
+        //   mutation newTransaction($input: NewTransaction!) {
+        //     newTransaction(input: $input)
+        //   }
+        // `
+        const response = await fetch(`${baseUrl}transactions`,
           {
             method: 'POST',
             headers: {
@@ -135,24 +135,23 @@ export default {
               authorization: 'Bearer ' + accessToken
             },
             body: JSON.stringify({
-              query: withdrawalMutation,
-              variables: {
-                input: {
+              transaction :     {
                   amount: this.form.amount,
-                  transactionType: 'Withdrawal',
-                  proof: '',
-                  wallet: this.form.wallet
-                }
+                  transaction_type: 'withdrawal',
+                  coin_type: this.form.withdrawalType,
+                  // proof: '',
+                  address: this.form.wallet
+
               }
             })
           }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+        ).then(res => res.json())
+        // const data = await response.json()
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
           this.$toastr.s('You have successfully initiated a withdrawal')
-          this.this.form.amount = ''
+          this.form.amount = ''
           this.form.wallet = ''
           this.form.transactionType = ''
         }
