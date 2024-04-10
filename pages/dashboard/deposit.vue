@@ -193,7 +193,7 @@ export default {
         //     newTransaction(input: $input)
         //   }
         // `
-        const response = await fetch(`${baseUrl}transactions`,
+        const response = await fetch(`${baseUrl}transactions/user_transaction`,
           {
             method: 'POST',
             headers: {

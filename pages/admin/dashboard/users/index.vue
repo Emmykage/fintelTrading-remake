@@ -16,9 +16,18 @@
           <input v-model="search" type="text" placeholder="Search.."
             class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
         </div>
-        <b-card class="mt-3">
-          <b-table striped show-empty responsive :items="filteredUsers" :fields="fields" :busy="loading"
-            :current-page="currentPage" :per-page="perPage">
+        <!-- <div></div> -->
+        <b-card class="mt-3 bg-green-30">
+          <b-table
+          striped
+          show-empty
+          responsive
+          :items="usersList"
+          :fields="fields"
+          :busy="loading"
+            :current-page="currentPage"
+            :per-page="perPage"
+            class="width-full">
             <template #table-busy>
               <div class="text-center my-2 cursor-pointer">
                 <b-spinner class="align-middle" />
@@ -45,17 +54,17 @@
             <template #cell(user)="data">
               <div class="font-medium text-sm cursor-pointer flex items-center gap-x-2 py-4">
                 <div class="bg-gray-500 text-white rounded-full h-10 w-10 flex text-center justify-center items-center">
-                  {{ getInitials(data?.item?.firstName, data?.item?.lastName) }}
+                  {{ getInitials(data?.item?.first_name, data?.item?.last_name) }}
                 </div>
                 <div>
                   <span>
                     {{
-            data?.item?.firstName
+            data?.item?.first_name
           }}
                   </span>
                   <span>
                     {{
-              data?.item?.lastName
+              data?.item?.last_name
             }}
                   </span><br>
                   <span>
@@ -68,27 +77,27 @@
             </template>
             <template #cell(planType)="data">
               <div class="font-medium py-4 text-sm">
-                {{ data?.item?.planType ?? 'N/A' }}
+                {{ data?.item?.plan?.name ?? 'N/A' }}
               </div>
             </template>
 
             <template #cell(accountBalance)="data">
               <div class="font-medium py-4 text-sm cursor-pointer">
                 {{
-            formatNumberAsDollar(data?.item?.accountBalance) ?? 'N/A' }}
+            formatNumberAsDollar(data?.item?.wallet?.wallet_balance) ?? 'N/A' }}
               </div>
             </template>
 
             <template #cell(tradingBalance)="data">
               <div class="font-medium py-4 text-sm">
-                {{ formatNumberAsDollar(data?.item?.tradingBalance) ?? 'N/A' }}
+                {{ formatNumberAsDollar(data?.item?.wallet?.net_earnings) ?? 'N/A' }}
               </div>
             </template>
 
             <template #cell(profit)="data">
               <div class="font-medium py-4 text-sm">
                 {{
-            formatNumberAsDollar(data?.item?.profit) ?? 'N/A'
+            formatNumberAsDollar(data?.item?.wallet?.profits) ?? 'N/A'
           }}
               </div>
             </template>
@@ -116,7 +125,7 @@
                   :class="[data?.item?.Status === 'Active' ? 'bg-green-500 text-white rounded-md text-sm' : 'bg-red-500 text-white rounded-md text-sm']"
                   class="px-3 py-2">
                   {{
-            data?.item?.Status }}
+            data?.item?.top_portfolo?.status ?? "--" }}
                 </span>
               </div>
             </template>
@@ -186,6 +195,7 @@
 </template>
 
 <script>
+import {baseUrl} from "~/assets/api/baseUrl"
 export default {
   name: 'UsersList',
   layout: 'dashboards',
@@ -194,6 +204,7 @@ export default {
     return {
       selectedUser: {},
       usersList: [],
+      filteredUsers_:[],
       processing: false,
       fields: [
         {
@@ -308,21 +319,23 @@ export default {
   },
   computed: {
     filteredUsers() {
-      const search = this.search.toLowerCase()
-      return this.usersList.filter((itm) => {
-        return (
-          itm?.firstName.toLowerCase?.().includes(search) ||
-          itm?.lastName.toLowerCase?.().includes(search) ||
-          itm?.email.toLowerCase?.().includes(search) ||
-          itm?.Status.toLowerCase?.().includes(search)
-        )
-      })
+      // const search = this.search.toLowerCase()
+      // console.log(this.search)
+      // return this.usersList.filter((itm) => {
+      //   return (
+      //     itm?.first_name.toLowerCase?.().includes(search) ||
+      //     itm?.last_name.toLowerCase?.().includes(search) ||
+      //     itm?.email.toLowerCase?.().includes(search)
+      //   )
+      // })
     }
   },
   created() {
     this.fetchUsers()
   },
   mounted() {
+    // this.fetchUsers()
+
     this.totalRows = this.usersList.length
   },
   methods: {
@@ -333,50 +346,32 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getUsers {
-            id
-            firstName
-            lastName
-            email
-            Status
-            PlanType
-            accountBalance
-            tradingBalance
-            profit
-            eth
-            btc
-            timeAdded
-          }
-        }
-      `
+
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}users`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.errors)
         } else {
-          this.usersList = data.data.getUsers
-          this.totalRows = data.data.getUsers.length
+          this.usersList = response
+          this.totalRows = response.length
+          console.log(response)
         }
       } finally {
         this.loading = false
       }
+      console.log('first')
     },
-    getInitials(firstName, lastName) {
-      const firstInitial = firstName ? firstName.charAt(0) : ''
-      const lastInitial = lastName ? lastName.charAt(0) : ''
+    getInitials(first_name, last_name) {
+      const firstInitial = first_name ? first_name.charAt(0) : ''
+      const lastInitial = last_name ? last_name.charAt(0) : ''
       return `${firstInitial}${lastInitial}`
     },
     handleClick(data) {
@@ -388,34 +383,23 @@ export default {
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const user = JSON.parse(window.localStorage.getItem('user'))
       try {
-        const updateUserMutation = `
-          mutation updateUser($userId: String!, $input: UpdateUser!) {
-            updateUser(userId: $userId, input: $input) {
-              accountBalance
-              tradingBalance
-              profit
-            }
-          }
-        `
-        const response = await fetch(
-          '',
+        // const updateUserMutation = `
+        //   mutation updateUser($userId: String!, $input: UpdateUser!) {
+        //     updateUser(userId: $userId, input: $input) {
+        //       accountBalance
+        //       tradingBalance
+        //       profit
+        //     }
+        //   }
+        // `
+        const response = await fetch(`${baseUrl}portfolios/${this.selectedUser.top_portfolo.id}/portfolio_interests`,
           {
             method: 'POST',
             headers: {
               'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({
-              query: updateUserMutation,
-              variables: {
-                userId: user?.id ?? '',
-                input: {
-                  profit: this.selectedUser.profit,
-                  tradingBalance: this.selectedUser.tradingBalance,
-                  accountBalance: this.selectedUser.accountBalance
-                }
-              }
-            })
+            body: JSON.stringify({portfolio_interest: {interest: this.selectedUser.profit}})
           }
         )
         const data = await response.json()
@@ -452,5 +436,9 @@ export default {
 
 .fade-leave-to {
   transform: scale(0.8);
+}
+table{
+  width: 100%;
+  background-color: red;
 }
 </style>

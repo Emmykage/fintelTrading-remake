@@ -46,7 +46,6 @@
 </template>
 
 <script>
-// import {loginUser} from '~/service/apiFetch.js'
 import { baseUrl } from '~/assets/api/baseUrl';
 
 export default {
@@ -82,8 +81,6 @@ export default {
   methods: {
 
     async handleSubmit(){
-
-      // console.log(this.user.email, baseUrl)
 
       this.processing = true
       try {

@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { baseUrl } from '~/assets/api/baseUrl';
+
 export default {
   layout: 'authLayout',
   data() {
@@ -55,47 +57,21 @@ export default {
   methods: {
     async login() {
       this.processing = true
-      const loginMutation = `
-        mutation {
-          adminLogin(email: "${this.form.email}", password: "${this.form.password}") {
-            jwt
-            user {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-          }
-        }
-      `
+
       try {
-        const response = await fetch('', {
+        const response = await fetch(`${baseUrl}users/login`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
           },
-          body: JSON.stringify({
-            query: loginMutation,
-            variables: {
-              email: this.form.email,
-              password: this.form.password
-            }
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+          body: JSON.stringify({user: this.form})
+        }).then(res => res.json())
+
+        if (response.error) {
+          this.$toastr.e(response.error)
         } else {
-          window.localStorage.setItem('auth', JSON.stringify(data?.data?.adminLogin?.jwt))
-          window.localStorage.setItem('user', JSON.stringify(data?.data?.adminLogin?.user))
+          window.localStorage.setItem('auth', JSON.stringify(response?.token))
+          window.localStorage.setItem('user', JSON.stringify(response?.user))
           this.$toastr.s('Login was successful')
           this.$router.push('/admin/dashboard')
         }

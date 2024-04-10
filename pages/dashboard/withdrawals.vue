@@ -122,12 +122,8 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       try {
-        // const withdrawalMutation = `
-        //   mutation newTransaction($input: NewTransaction!) {
-        //     newTransaction(input: $input)
-        //   }
-        // `
-        const response = await fetch(`${baseUrl}transactions`,
+
+        const response = await fetch(`${baseUrl}transactions/user_transaction`,
           {
             method: 'POST',
             headers: {

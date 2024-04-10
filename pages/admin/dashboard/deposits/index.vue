@@ -18,7 +18,7 @@
             class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
         </div>
         <b-card class="mt-3">
-          <b-table striped show-empty responsive :items="filteredDeposits" :fields="fields" :busy="loading"
+          <b-table class="table" striped show-empty responsive :items="filteredDeposits" :fields="fields" :busy="loading"
             :current-page="currentPage" :per-page="perPage">
             <template #table-busy>
               <div class="text-center my-2 cursor-pointer">
@@ -54,7 +54,7 @@
             <template #cell(wallet)="data">
               <div class="font-medium py-4 text-sm cursor-pointer">
                 {{
-            data?.item?.wallet ?? 'N/A' }}
+            data?.item?.address ?? 'N/A' }}
               </div>
             </template>
 
@@ -67,32 +67,28 @@
             <template #cell(transactionStatus)="data">
               <div class="font-medium py-4 text-sm cursor-pointer">
                 <span class="px-3 py-2 rounded-full text-sm"
-                  :class="[data?.item?.transactionStatus === 'Pending' ? 'bg-yellow-500 text-white' : data?.item?.transactionStatus === 'Approved' ? 'text-white bg-green-500' : data?.item?.transactionStatus === 'Declined' ? 'text-white bg-red-500' : '']">
-                  {{
-            data?.item?.transactionStatus ?? 'N/A' }}
+                  :class="[data?.item?.status === 'pending' ? 'bg-yellow-500 text-white' : data?.item?.status === 'approved' ? 'text-white bg-green-500' : data?.item?.status === 'declined' ? 'text-white bg-red-500' : '']">
+
+                  {{      data?.item?.status ?? 'N/A' }}
                 </span>
               </div>
             </template>
             <template #cell(user)="data">
               <div class="font-medium text-sm cursor-pointer flex items-center gap-x-2 py-4">
                 <div class="bg-gray-500 text-white rounded-full h-10 w-10 flex text-center justify-center items-center">
-                  {{ getInitials(data?.item?.user?.firstName, data?.item?.user?.lastName) }}
+                  {{ getInitials(data?.item?.user?.first_name, data?.item?.user?.last_name) }}
                 </div>
                 <div>
                   <span>
                     {{
-            data?.item?.user?.firstName
+            data?.item?.user?.first_name
           }}
                   </span>
                   <span>
-                    {{
-              data?.item?.user?.lastName
-            }}
+                    {{ data?.item?.user?.last_name }}
                   </span><br>
                   <span>
-                    {{
-              data?.item?.user?.email
-            }}
+                    {{ data?.item?.user?.email }}
                   </span>
                 </div>
               </div>
@@ -111,19 +107,19 @@
 
             <template #cell(timeAdded)="data">
               <div class="font-medium py-4 text-sm">
-                {{ formatDateTime(data?.item?.timeAdded) ?? 'N/A' }}
+                {{ formatDateTime(data?.item?.created_at) ?? 'N/A' }}
               </div>
             </template>
 
             <template #cell(actions)="data">
               <div class="py-4">
-                <div v-if="data?.item?.transactionStatus === 'Pending'" class="flex items-center gap-x-3">
+                <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
                   <button class="text-white text-xs bg-green-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item, 'approve')">
+                    @click="handleAction(data.item.id, 'approve')">
                     Approve
                   </button>
                   <button class="text-white text-xs bg-red-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item, 'reject')">
+                    @click="handleAction(data.item.id, 'reject')">
                     Reject
                   </button>
                 </div>
@@ -137,7 +133,7 @@
           </b-table>
 
           <div class="flex justify-end items-end">
-            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" size="md" class="my-3" />
+            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" size="md" class="my-3  bg-gray-800 w-80 flex" />
           </div>
         </b-card>
         <!-- </div> -->
@@ -150,6 +146,7 @@
 <script>
 import EnlargeableImage from '@diracleo/vue-enlargeable-image'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import {baseUrl} from '~/assets/api/baseUrl'
 // import 'sweetalert2/src/sweetalert2.scss'
 export default {
   name: 'DepositsList',
@@ -163,8 +160,8 @@ export default {
       const search = this.search.toLowerCase()
       return this.transactionsList.filter((itm) => {
         return (
-          itm?.user.firstName.toLowerCase?.().includes(search) ||
-          itm?.user.lastName.toLowerCase?.().includes(search) ||
+          itm?.user.first_name.toLowerCase?.().includes(search) ||
+          itm?.user.last_name.toLowerCase?.().includes(search) ||
           itm?.email.toLowerCase?.().includes(search)
         )
       })
@@ -293,51 +290,21 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getTransactions {
-            id
-            amount
-            wallet
-            transactionType
-            transactionStatus
-            user {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-            proof
-            timeAdded
-          }
-        }
-      `
-
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}transactions`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.errors)
         } else {
-          this.transactionsList = data.data.getTransactions.filter(itm => itm.transactionType === 'Deposit')
+          this.transactionsList = response.filter(itm => itm.transaction_type === 'deposit')
           this.totalRows = this.transactionsList.length
+          console.log(this.transactionsList)
         }
       } finally {
         this.loading = false
@@ -362,7 +329,7 @@ export default {
         return 'Invalid Date'
       }
     },
-    handleAction(data, type) {
+    handleAction(id, type) {
       Swal.fire({
         title: `${type === 'approve' ? 'Approve' : 'Reject'} Deposit`,
         text: "Please Note: You won't be able to revert this!",
@@ -373,7 +340,7 @@ export default {
         confirmButtonText: 'Yes, Proceed!'
       }).then((result) => {
         if (result.value) {
-          this.processTransaction(data.id, type)
+          this.processTransaction(id, type)
         } else {
           this.$swal('Cancelled', 'Action was cancelled', 'info')
         }
@@ -384,31 +351,19 @@ export default {
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const statusType = status === 'approve' ? 'Approved' : status === 'reject' ? 'Declined' : 'Pending'
       try {
-        const processTransactionQuery = `
-            mutation ProcessTransaction($transactionID: String!, $status: TransactionStatus!) {
-              processTransaction(transactionID: $transactionID, status: $status)
-            }
-          `
-        const response = await fetch(
-          '',
+
+        const response = await fetch(`${baseUrl}transactions/${transactionId}`,
           {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
               'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({
-              query: processTransactionQuery,
-              variables: {
-                transactionID: transactionId,
-                status: statusType
-              }
-            })
+            body: JSON.stringify({transaction: {status} })
           }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+        ).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
           this.$toastr.s(`You have successfully ${status === 'approve' ? 'Approved' : 'Rejected'} this transaction.`)
         }
@@ -439,5 +394,8 @@ export default {
 
 .fade-leave-to {
   transform: scale(0.8);
+}
+table{
+  width: 100% !important;
 }
 </style>
