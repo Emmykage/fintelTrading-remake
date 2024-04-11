@@ -14,7 +14,7 @@
           <label for="search" class="sr-only">Search</label>
 
           <input v-model="search" type="text" placeholder="Search.."
-            class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
+            class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
         </div>
         <b-card class="mt-3">
           <b-table striped show-empty responsive :items="filteredWithdrawals" :fields="fields" :busy="loading"
@@ -53,7 +53,7 @@
             <template #cell(wallet)="data">
               <div class="font-medium py-4 text-sm cursor-pointer">
                 {{
-            data?.item?.wallet ?? 'N/A' }}
+            data?.item?.address ?? 'N/A' }}
               </div>
             </template>
 
@@ -66,26 +66,26 @@
             <template #cell(transactionStatus)="data">
               <div class="font-medium py-4 text-sm cursor-pointer">
                 <span class="px-3 py-2 rounded-full text-sm"
-                  :class="[data?.item?.transactionStatus === 'Pending' ? 'bg-yellow-500 text-white' : data?.item?.transactionStatus === 'Approved' ? 'text-white bg-green-500' : data?.item?.transactionStatus === 'Declined' ? 'text-white bg-red-500' : '']">
+                  :class="[data?.item?.status === 'pending' ? 'bg-yellow-500 text-white' : data?.item?.status === 'approved' ? 'text-white bg-green-500' : data?.item?.status === 'declined' ? 'text-white bg-red-500' : '']">
                   {{
-            data?.item?.transactionStatus ?? 'N/A' }}
+            data?.item?.status ?? 'N/A' }}
                 </span>
               </div>
             </template>
             <template #cell(user)="data">
               <div class="font-medium text-sm cursor-pointer flex items-center gap-x-2 py-4">
                 <div class="bg-gray-500 text-white rounded-full h-10 w-10 flex text-center justify-center items-center">
-                  {{ getInitials(data?.item?.user?.firstName, data?.item?.user?.lastName) }}
+                  {{ getInitials(data?.item?.user?.first_name, data?.item?.user?.last_name) }}
                 </div>
                 <div>
                   <span>
                     {{
-            data?.item?.user?.firstName
+            data?.item?.user?.first_name
           }}
                   </span>
                   <span>
                     {{
-              data?.item?.user?.lastName
+              data?.item?.user?.last_name
             }}
                   </span><br>
                   <span>
@@ -97,7 +97,7 @@
               </div>
             </template>
 
-            <template #cell(proof)="data">
+            <!-- <template #cell(proof)="data">
               <div class="font-medium py-4 text-sm">
                 <span v-if="data?.item?.proof" class="font-medium py-2 text-sm">
                   <enlargeable-image :src="data.item.proof" class="z-50" animation_duration="700">
@@ -106,23 +106,23 @@
                 </span>
                 <span v-else>N/A</span>
               </div>
-            </template>
+            </template> -->
 
             <template #cell(timeAdded)="data">
               <div class="font-medium py-4 text-sm">
-                {{ formatDateTime(data?.item?.timeAdded) ?? 'N/A' }}
+                {{ formatDateTime(data?.item?.created_at) ?? 'N/A' }}
               </div>
             </template>
 
             <template #cell(actions)="data">
               <div class="py-4">
-                <div v-if="data?.item?.transactionStatus === 'Pending'" class="flex items-center gap-x-3">
-                  <button class="text-white text-xs bg-green-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item, 'approve')">
+                <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
+                  <button class="text-white text-xs bg-green-500 w-full py-1.5 px-2 rounded-full"
+                    @click="handleAction(data.item, 'approved')">
                     Approve
                   </button>
-                  <button class="text-white text-xs bg-red-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item, 'reject')">
+                  <button class="text-white text-xs bg-red-500 w-full py-1.5 px-2 rounded-full"
+                    @click="handleAction(data.item, 'declined')">
                     Reject
                   </button>
                 </div>
@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import {baseUrl} from "~/assets/api/baseUrl"
 import EnlargeableImage from '@diracleo/vue-enlargeable-image'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 // import 'sweetalert2/src/sweetalert2.scss'
@@ -192,11 +193,6 @@ export default {
           class: 'font-medium text-gray-400 text-sm'
         },
         {
-          key: 'proof',
-          label: 'Proof',
-          class: 'font-medium text-gray-400 text-sm'
-        },
-        {
           key: 'timeAdded',
           label: 'Date',
           class: 'font-medium text-gray-400 text-sm'
@@ -220,8 +216,8 @@ export default {
       const search = this.search.toLowerCase()
       return this.transactionsList.filter((itm) => {
         return (
-          itm?.user.firstName.toLowerCase?.().includes(search) ||
-          itm?.user.lastName.toLowerCase?.().includes(search) ||
+          itm?.user.first_name.toLowerCase?.().includes(search) ||
+          itm?.user.last_name.toLowerCase?.().includes(search) ||
           itm?.email.toLowerCase?.().includes(search)
         )
       })
@@ -241,51 +237,23 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getTransactions {
-            id
-            amount
-            wallet
-            transactionType
-            transactionStatus
-            user {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-            proof
-            timeAdded
-          }
-        }
-      `
+
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}transactions`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.errors)
         } else {
-          this.transactionsList = data.data.getTransactions.filter(itm => itm.transactionType === 'Withdrawal')
+          this.transactionsList = response.filter(itm => itm.transaction_type === 'withdrawal')
           this.totalRows = this.transactionsList.length
+          console.log(this.transactionsList)
         }
       } finally {
         this.loading = false
@@ -330,26 +298,15 @@ export default {
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const statusType = status === 'approve' ? 'Approved' : status === 'reject' ? 'Declined' : 'Pending'
       try {
-        const processTransactionQuery = `
-            mutation ProcessTransaction($transactionID: String!, $status: TransactionStatus!) {
-              processTransaction(transactionID: $transactionID, status: $status)
-            }
-          `
-        const response = await fetch(
-          '',
+
+        const response = await fetch(`${baseUrl}transactions/${transactionId}`,
           {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
               'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({
-              query: processTransactionQuery,
-              variables: {
-                transactionID: transactionId,
-                status: statusType
-              }
-            })
+            body: JSON.stringify({transaction: {status}})
           }
         )
         const data = await response.json()

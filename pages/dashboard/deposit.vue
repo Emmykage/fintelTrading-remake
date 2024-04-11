@@ -82,7 +82,7 @@
                         upload</span> or drag and drop</p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                   </div>
-                  <input id="dropzone-file" type="file" class="hidden" @change="handleProofUpload">
+                  <input ref="imageFile" id="dropzone-file" type="file" class="hidden" @change="handleProofUpload">
                 </label>
               </div>
             </div>
@@ -171,13 +171,17 @@ export default {
     },
     handleProofUpload(event) {
       const file = event.target.files[0]
+      console.log(" first proof", this.$refs.imageFile.files[0])
+
 
       if (file) {
         // Read the file and set the preview
         const reader = new FileReader()
         reader.onload = (e) => {
           this.imagePreview = reader.result
-          this.form.proof = e?.target?.result
+          // this.form.proof = e?.target?.result
+          this.form.proof = this.$refs.imageFile.files[0]
+
         }
         reader.readAsDataURL(file)
       } else {
@@ -188,30 +192,22 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       try {
-        // const withdrawalMutation = `
-        //   mutation newTransaction($input: NewTransaction!) {
-        //     newTransaction(input: $input)
-        //   }
-        // `
-        const response = await fetch(`${baseUrl}transactions/user_transaction`,
+
+        const formData = new FormData();
+        formData.append('transaction[amount]', this.form.amount);
+        formData.append('transaction[transaction_type]', 'deposit');
+        formData.append('transaction[status]', 'pending');
+        formData.append('transaction[proof]', this.form.proof);
+        formData.append('transaction[address]', this.computedWalletAddress);
+        formData.append('transaction[coin_type]', this.form.depositType);
+
+        const response = await fetch(`${baseUrl}transactions`,
           {
             method: 'POST',
             headers: {
-              'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({
-
-                transaction: {
-                  amount: this.form.amount,
-                  transaction_type: 'deposit',
-                  status: "pending",
-                  // proof: this.form.proof,
-                  address: this.computedWalletAddress,
-                  coin_type: this.form.depositType
-                }
-
-            })
+            body: formData
           }
         ).then(res => res.json())
         if (response?.error) {

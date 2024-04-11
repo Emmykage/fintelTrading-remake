@@ -123,7 +123,7 @@ export default {
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       try {
 
-        const response = await fetch(`${baseUrl}transactions/user_transaction`,
+        const response = await fetch(`${baseUrl}transactions`,
           {
             method: 'POST',
             headers: {

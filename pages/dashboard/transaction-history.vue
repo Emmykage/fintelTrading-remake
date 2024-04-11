@@ -59,14 +59,14 @@
               <div class="py-4">
                 <span class="font-medium py-2 text-sm cursor-pointer">
                   {{
-            data?.item?.wallet }}</span>
+            data?.item?.address }}</span>
               </div>
             </template>
 
             <template #cell(transactionType)="data">
               <div class="py-4">
                 <span class="font-medium py-2 text-sm">
-                  {{ data?.item?.transactionType }}</span>
+                  {{ data?.item?.transaction_type }}</span>
               </div>
             </template>
 
@@ -74,15 +74,15 @@
               <div class="py-4">
                 <span class="font-medium py-2 text-sm cursor-pointer">
                   {{
-            data?.item?.transactionStatus }}</span>
+            data?.item?.status }}</span>
               </div>
             </template>
 
             <template #cell(proof)="data">
               <div class="py-4">
-                <span v-if="data?.item?.proof" class="font-medium py-2 text-sm">
-                  <enlargeable-image :src="data.item.proof" class="z-50" animation_duration="700">
-                    <img class="h-10 w-10 rounded-full" alt="" :src="data?.item?.proof">
+                <span v-if="data?.item?.proof_url" class="font-medium py-2 text-sm">
+                  <enlargeable-image :src="data.item.proof_url" class="z-50" animation_duration="700">
+                    <img class="h-10 w-10 rounded-full" :alt="data?.item?.transaction_type" :src="data?.item?.proof_url">
                   </enlargeable-image>
                 </span>
                 <span v-else>N/A</span>
@@ -91,7 +91,7 @@
 
             <template #cell(timeAdded)="data">
               <div class="py-4">
-                <span class="font-medium py-2 text-sm">{{ formatDateTime(data?.item?.timeAdded) }}</span>
+                <span class="font-medium py-2 text-sm">{{ formatDateTime(data?.item?.created_at) }}</span>
               </div>
             </template>
           </b-table>
@@ -109,6 +109,7 @@
 
 <script>
 import EnlargeableImage from '@diracleo/vue-enlargeable-image'
+import {baseUrl} from "~/assets/api/baseUrl"
 export default {
   name: 'Objective',
   components: {
@@ -229,51 +230,24 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getUsersTransactions {
-            id
-            amount
-            wallet
-            transactionType
-            transactionStatus
-            user {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-            proof
-            timeAdded
-          }
-        }
-      `
+
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}transactions`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        // const data = await response.json()
+        if (response?.errors) {
+          this.$toastr.e(response.error)
         } else {
-          this.transactionsList = data.data.getUsersTransactions
-          this.totalRows = data.data.getUsersTransactions.length
+          this.transactionsList = response
+          this.totalRows = response.length
+          console.log(response)
         }
       } finally {
         this.loading = false

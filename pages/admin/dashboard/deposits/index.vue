@@ -15,7 +15,7 @@
           <label for="search" class="sr-only">Search</label>
 
           <input v-model="search" type="text" placeholder="Search.."
-            class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
+            class="w-full rounded-tr-md rounded-tl-md outline-none bg-white p-3 text-gray-700 transition border focus:border-white focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-transparent">
         </div>
         <b-card class="mt-3">
           <b-table class="table" striped show-empty responsive :items="filteredDeposits" :fields="fields" :busy="loading"
@@ -96,9 +96,9 @@
 
             <template #cell(proof)="data">
               <div class="font-medium py-4 text-sm">
-                <span v-if="data?.item?.proof">
-                  <enlargeable-image :src="data?.item?.proof" class="z-50" animation_duration="700">
-                    <img class="h-10 w-10 rounded-full" alt="" :src="data?.item?.proof">
+                <span v-if="data?.item?.proof_url">
+                  <enlargeable-image :src="data?.item?.proof_url" class="z-50" animation_duration="700">
+                    <img class="h-10 w-10 rounded-full" alt="" :src="data?.item?.proof_url">
                   </enlargeable-image>
                 </span>
                 <span v-else>N/A</span>
@@ -304,7 +304,6 @@ export default {
         } else {
           this.transactionsList = response.filter(itm => itm.transaction_type === 'deposit')
           this.totalRows = this.transactionsList.length
-          console.log(this.transactionsList)
         }
       } finally {
         this.loading = false

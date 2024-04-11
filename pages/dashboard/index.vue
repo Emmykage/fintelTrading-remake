@@ -36,7 +36,7 @@
                     Profits
                   </p>
                   <p class="text-lg font-semibold text-white">
-                    {{ formatNumberAsDollar(userData?.profit) ?? '0.00' }}
+                    {{ formatNumberAsDollar(wallet?.net_earnings) ?? '0.00' }}
                   </p>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                     Trading
                   </p>
                   <p class="text-lg font-semibold text-white">
-                    {{ formatNumberAsDollar(userData?.tradingBalance) ?? '0.00' }}
+                    {{ formatNumberAsDollar(wallet?.profits) ?? '0.00' }}
                   </p>
                 </div>
               </div>
