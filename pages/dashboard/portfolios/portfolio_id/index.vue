@@ -11,7 +11,7 @@
             </svg>
           </button>
 
-          <button class="text-gray-50 bg-slate-800" @click="handleLiquid("inactive")">liquidate Asset</button>
+          <button class="text-gray-50 bg-slate-800" @click="handleLiquid">liquidate Asset</button>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
         </div>
 
