@@ -50,7 +50,8 @@ export default {
   css: [
     '@/assets/css/main.css',
     'bootstrap/dist/css/bootstrap.css',
-    'bootstrap-vue/dist/bootstrap-vue.css'
+    'bootstrap-vue/dist/bootstrap-vue.css',
+    'sweetalert2/dist/sweetalert2.min.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
