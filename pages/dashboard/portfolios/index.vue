@@ -124,7 +124,7 @@ export default {
     },
 
     handleNav(id){
-      this.$router.push('/portfolio_id/' + id)
+      this.$router.push('/dashboard/portfolios/' + id)
     },
     async fetchPortfolios(){
       this.loading = true
