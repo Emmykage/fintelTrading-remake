@@ -112,6 +112,7 @@ export default {
       depositType: '',
       imagePreview: null,
       adminData: {},
+      pocketAddress:{},
       processing: false,
       loadingAdminInfo: false,
       form: {
@@ -134,11 +135,11 @@ export default {
         ? [
           {
             name: 'Bitcoin',
-            code: this.adminData?.admin?.btc ?? '1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71.'
+            code: this.pocketAddress?.btc ?? '1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71.'
           },
           {
             name: 'Ethereum erc-20',
-            code: this.adminData?.admin?.eth ?? '0xb794f5ea0ba39494ce839613fffba74279579268'
+            code: this.pocketAddress?.eth ?? '0xb794f5ea0ba39494ce839613fffba74279579268'
           },
           {
             name: 'Bank Account',
@@ -163,6 +164,7 @@ export default {
   },
   mounted() {
     this.getAdminInfo()
+    this.getAdminPocket()
   },
   methods: {
     copy(val) {
@@ -171,7 +173,6 @@ export default {
     },
     handleProofUpload(event) {
       const file = event.target.files[0]
-      console.log(" first proof", this.$refs.imageFile.files[0])
 
 
       if (file) {
@@ -227,31 +228,6 @@ export default {
     async getAdminInfo() {
       this.loadingAdminInfo = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-      const query = `
-        query {
-          getUser {
-            id
-            firstName
-            lastName
-            email
-            Status
-            PlanType
-            accountBalance
-            tradingBalance
-            profit
-            eth
-            btc
-            timeAdded
-            admin {
-              firstName
-              lastName
-              email
-              btc
-              eth
-            }
-          }
-        }
-      `
 
       try {
         const response = await fetch(`${baseUrl}users/account`, {
@@ -260,15 +236,37 @@ export default {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          // body: JSON.stringify({
-          //   query
-          // })
+
         }).then(res => res.json())
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
-          this.adminData = response.user
+          this.adminData = response
           // console.log(this.adminData)
+
+        }
+      } finally {
+        this.loadingAdminInfo = false
+      }
+
+    },
+    async getAdminPocket() {
+      this.loadingAdminInfo = true
+      const accessToken = JSON.parse(window.localStorage.getItem('auth'))
+      try {
+        const response = await fetch(`${baseUrl}pockets/get_pocket`, {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            authorization: 'Bearer ' + accessToken
+          },
+
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
+        } else {
+          this.pocketAddress = response
+          console.log(response)
 
         }
       } finally {

@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import {baseUrl} from "~/assets/api/baseUrl"
 export default {
   layout: 'dashboards',
   data() {
@@ -159,26 +160,8 @@ export default {
     async updateWallet() {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-      const user = JSON.parse(window.localStorage.getItem('user'))
       try {
-        const updateUserMutation = `
-          mutation updateUser($userId: String!, $input: UpdateUser!) {
-            updateUser(userId: $userId, input: $input) {
-              id
-              firstName
-              lastName
-              email
-              Status
-              PlanType
-              accountBalance
-              tradingBalance
-              profit
-              eth
-              btc
-              timeAdded
-            }
-          }
-        `
+
         const input = this.selectedWallet.value === 'btc'
           ? {
             btc: this.selectedWallet.address
@@ -191,26 +174,20 @@ export default {
               btc: this.selectedWallet.address,
               eth: this.selectedWallet.address
             }
-        const response = await fetch(
-          '',
+
+            const id = 2
+        const response = await fetch(`${baseUrl}pockets/${id}`,
           {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
               'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({
-              query: updateUserMutation,
-              variables: {
-                userId: user?.id ?? '',
-                input
-              }
-            })
+            body: JSON.stringify(input)
           }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+        ).then(res =>res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
           this.$toastr.s(`${this.selectedWallet?.name} wallet address was successfully updated`)
           this.$bvModal.hide('wallet-update')
@@ -218,39 +195,29 @@ export default {
       } finally {
         this.processing = false
       }
+
     },
     async fetchAdminStats() {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getAdminStats {
-            totalProfit
-            totalWithdrawal
-            totalUsers
-            totalDeposits
-            tradingBalance
-          }
-        }
-      `
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}wallets/get_adminstat`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+
+        if (response?.error) {
+          // this.$toastr.e(response.errors)
         } else {
-          this.tradingBalance = data?.data?.getAdminStats?.tradingBalance
+          // this.tradingBalance = response?.data?.getAdminStats?.tradingBalance
+          this.tradingBalance = response
+
         }
       } finally {
         this.loading = false
@@ -260,28 +227,20 @@ export default {
       this.processingProfitUpdate = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const mutation = `
-        mutation {
-          updateProfits
-        }
-      `
-
       try {
-        const response = await fetch('', {
+        const response = await fetch(`${baseUrl}portfolios/create_interests`, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query: mutation
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+          // body: JSON.stringify()
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
-          this.updateProfitStatus = data.data.updateProfits
+          this.$toastr.s(response.message)
+          this.updateProfitStatus = response.message
         }
       } finally {
         this.processingProfitUpdate = false
@@ -292,41 +251,21 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getUser {
-            id
-            firstName
-            lastName
-            email
-            Status
-            PlanType
-            accountBalance
-            tradingBalance
-            profit
-            eth
-            btc
-            timeAdded
-          }
-        }
-      `
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}pockets`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        // const data = await response.json()
+        if (response?.error) {
+          this.$toastr.e(response.errors)
         } else {
-          this.updatedUserData = data.data.getUser
+          this.updatedUserData = response
         }
       } finally {
         this.loading = false

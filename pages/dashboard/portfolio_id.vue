@@ -10,6 +10,7 @@
               <path d="M19 12H6M12 5l-7 7 7 7" />
             </svg>
           </button>
+          <h2>Parameter {{$route.params.id}}</h2>
         </div>
 
         <div class="sm:flex-1 pb-0 mt-3">

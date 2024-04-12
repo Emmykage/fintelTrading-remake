@@ -367,7 +367,6 @@ export default {
       } finally {
         this.loading = false
       }
-      console.log('first')
     },
     getInitials(first_name, last_name) {
       const firstInitial = first_name ? first_name.charAt(0) : ''
@@ -382,17 +381,12 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const user = JSON.parse(window.localStorage.getItem('user'))
+      console.log('first time')
+      console.log(this.selectedUser.top_portfolio)
+
       try {
-        // const updateUserMutation = `
-        //   mutation updateUser($userId: String!, $input: UpdateUser!) {
-        //     updateUser(userId: $userId, input: $input) {
-        //       accountBalance
-        //       tradingBalance
-        //       profit
-        //     }
-        //   }
-        // `
-        const response = await fetch(`${baseUrl}portfolios/${this.selectedUser.top_portfolo.id}/portfolio_interests`,
+
+        const response = await fetch(`${baseUrl}portfolios/${this.selectedUser.top_portfolio.id}/portfolio_interests`,
           {
             method: 'POST',
             headers: {

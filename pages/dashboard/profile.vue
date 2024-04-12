@@ -122,7 +122,7 @@ export default {
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
-          this.updatedUserData = response.user
+          this.updatedUserData = response
           // console.log(response.user)
         }
       } finally {

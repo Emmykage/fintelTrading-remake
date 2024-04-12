@@ -115,7 +115,7 @@
             </template>
 
             <template #cell(actions)="data">
-              <div class="py-4">
+              <div class="py-4 ">
                 <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
                   <button class="text-white text-xs bg-green-500 w-full py-1.5 px-2 rounded-full"
                     @click="handleAction(data.item, 'approved')">

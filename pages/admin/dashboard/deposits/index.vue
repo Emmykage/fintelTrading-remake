@@ -115,11 +115,11 @@
               <div class="py-4">
                 <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
                   <button class="text-white text-xs bg-green-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item.id, 'approve')">
+                    @click="handleAction(data.item.id, 'approved')">
                     Approve
                   </button>
                   <button class="text-white text-xs bg-red-500 w-full py-1.5 rounded-full"
-                    @click="handleAction(data.item.id, 'reject')">
+                    @click="handleAction(data.item.id, 'declined')">
                     Reject
                   </button>
                 </div>

@@ -102,6 +102,11 @@ export default {
           icon: 'withdraw',
           url: '/dashboard/withdrawals'
         },
+         {
+          name: 'Portfolios',
+          icon: 'withdraw',
+          url: '/dashboard/portfolios'
+        },
         {
           name: 'Buy plans',
           icon: 'investment',
