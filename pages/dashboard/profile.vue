@@ -26,7 +26,7 @@
 
         <div class="space-y-1">
           <label class="text-xs text-gray-700 font-medium">Password:</label>
-          <input v-model="updatedUserData.password_digest" type="password" disabled
+          <input v-model="updatedUserData.password" type="password" disabled
             class="py-2 border rounded-md w-full outline-none pl-6">
           <span class="text-xs text-gray-500">We'll never share your details with anyone else</span>
         </div>
@@ -123,7 +123,7 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.updatedUserData = response
-          // console.log(response.user)
+          console.log(response)
         }
       } finally {
         this.loading = false

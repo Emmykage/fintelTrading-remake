@@ -15,8 +15,8 @@
       </div>
 
 
-      <div v-for="{plan, id} in portfolioList" :key="id" class="flex justify-between">
-        <a class=" basis-[100%] sm:basis-[40%] lg:basis-[30%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
+      <div  class="flex justify-start gap-[2%]">
+        <a v-for="{plan, status, id} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:basis-[30%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
           <h3 class="text-xl font-semibold text-center my-3 ">{{plan.value}}</h3>
           <p class="text-center">@</p>
           <h2 class="text-center text-3xl font-medium text-gray-600 my-3">29% </h2>
@@ -25,6 +25,9 @@
               <span>{{formatNumberAsDollar(4000)}}</span>
 
           </div>
+          <span v-if="status == 'active'" class="absolute top-0 right-0 bg-green-500 px-4 ">active</span>
+          <span v-else class="absolute top-0 right-0 bg-gray-400 px-4 ">inactive</span>
+
         </a>
       </div>
     </section>

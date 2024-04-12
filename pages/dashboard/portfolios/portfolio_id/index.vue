@@ -11,7 +11,7 @@
             </svg>
           </button>
 
-          <button class="text-gray-50 bg-slate-800" @click="handleLiquid">liquidate Asset</button>
+          <a class="text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction(id, 'inactive')">liquidate Asset</a>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
         </div>
 
@@ -80,6 +80,8 @@
 import EnlargeableImage from '@diracleo/vue-enlargeable-image'
 import {baseUrl} from "~/assets/api/baseUrl"
 // const {portfolioId} = useRoute().params
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
 
 export default {
   name: 'Objective',
@@ -90,6 +92,7 @@ export default {
   scrollToTop: true,
   data() {
     return {
+      id: "b5324daa-4d89-4ebf-97d1-c454603c4e87",
       portfolio_interests: [],
       fields: [
         {
@@ -179,6 +182,23 @@ export default {
     goBack() {
       this.$router.go(-1)
     },
+    handleAction(id, type) {
+      Swal.fire({
+        title: `${type === 'inactive' ? 'Liquidate' : 'Reject'} Portfolio`,
+        text: "Please Note: You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Proceed!'
+      }).then((result) => {
+        if (result.value) {
+          this.handleLiquid(type)
+        } else {
+          this.$swal('Cancelled', 'Action was cancelled', 'info')
+        }
+      })
+    },
     async fetchPortfolio() {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
@@ -220,11 +240,11 @@ export default {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: json.stringify({portfolio: inactive})
+          body: JSON.stringify({portfolio: {status: inactive}})
 
         }).then(res => res.json())
         // const data = await response.json()
-        if (response?.errors) {
+        if (response?.error) {
           this.$toastr.e(response.error)
         } else {
 
