@@ -62,6 +62,7 @@
 
 <script>
 // import Graph4 from '@/components/Graph4.vue'
+import {baseUrl} from '~/assets/api/baseUrl'
 export default {
   components: {
     // Graph4
@@ -111,34 +112,22 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       this.loading = true
-      const query = `
-        query {
-          getAdminStats {
-            totalProfit
-            totalWithdrawal
-            totalUsers
-            totalDeposits
-            tradingBalance
-          }
-        }
-      `
+
 
       try {
-        const response = await fetch('', {
-          method: 'POST',
+        const response = await fetch(`${baseUrl}statistics`, {
+          method: 'GET',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({
-            query
-          })
-        })
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+
+        }).then(res => res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
         } else {
-          this.stats = data.data.getAdminStats
+          this.stats = response
+          console.log(response)
         }
       } finally {
         this.loading = false
