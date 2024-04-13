@@ -10,6 +10,10 @@
               <path d="M19 12H6M12 5l-7 7 7 7" />
             </svg>
           </button>
+          <p class="text-black">
+            {{ $route.params.id }}
+
+          </p>
 
           <a class="text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction(id, 'inactive')">liquidate Asset</a>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
@@ -94,6 +98,7 @@ export default {
     return {
       id: "b5324daa-4d89-4ebf-97d1-c454603c4e87",
       portfolio_interests: [],
+      portfolio_id: "",
       fields: [
         {
           key: 'sn',
@@ -200,10 +205,17 @@ export default {
       })
     },
     async fetchPortfolio() {
+      const id = this.$route.params.id
+
+      console.log(id )
+
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-      // this.loading = true
-      const id = "b5324daa-4d89-4ebf-97d1-c454603c4e87"
+
+      // const postId = params.id;
+
+      // console.log(postId)
+
 
       try {
         const response = await fetch(`${baseUrl}portfolios/${id}`, {

@@ -16,17 +16,17 @@
 
 
       <div  class="flex justify-start gap-[2%]">
-        <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:basis-[30%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
-          <h3 class="text-xl font-semibold text-center my-3 ">{{plan.value}}</h3>
-          <p class="text-center text-blue-900">@</p>
-          <h2 class="text-center text-3xl font-medium text-gray-600 my-3 no-underline">29% </h2>
+        <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:w-[27%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
+          <h3 class="text-xl font-semibold text-center my-3 text-red-600  underline">{{plan.value}}</h3>
+          <p class="text-center text-gray-900">@</p>
+          <h2 class="text-center text-3xl font-medium text-gray-600 my-3">29% </h2>
           <div class="flex justify-center w-[75%] m-auto font-semibold text-center">
               <!-- <span>Value</span> -->
               <span>{{formatNumberAsDollar(amount)}}</span>
 
           </div>
-          <span v-if="status == 'active'" class="absolute top-0 right-0 bg-green-500 px-4 ">active</span>
-          <span v-else class="absolute top-0 right-0 bg-gray-400 px-4 ">inactive</span>
+          <span v-if="status == 'active'" class="absolute top-0 right-0 bg-green-500 px-4">active</span>
+          <span v-else class="absolute top-0 right-0 bg-gray-400 px-4">inactive</span>
 
         </a>
       </div>
@@ -127,7 +127,7 @@ export default {
     },
 
     handleNav(id){
-      this.$router.push('/dashboard/portfolios/' + id)
+      this.$router.push('/dashboard/portfolios/portfolio_id/' + id)
     },
     async fetchPortfolios(){
       this.loading = true
@@ -180,3 +180,9 @@ export default {
 
 
 </script>
+<style>
+.no_underline{
+  text-decoration: none !important;
+}
+
+</style>
