@@ -92,17 +92,16 @@ export default {
       body: JSON.stringify({user: this.user})}
     ).then(res => res.json() )
 
-    const data = response
-    console.log(data)
 
-    if (data?.errors) {
-      this.$toastr.e(data.errors[0].message)
+    if (response?.error) {
+      this.$toastr.e(response.error)
     } else {
 
-      window.localStorage.setItem('auth', JSON.stringify(data?.token))
-      window.localStorage.setItem('user', JSON.stringify(data?.user))
+      window.localStorage.setItem('auth', JSON.stringify(response?.token))
+      window.localStorage.setItem('user', JSON.stringify(response?.user))
       this.$toastr.s('Login was successful')
       this.$router.push('/dashboard')
+      console.log(response)
       // return response.data;
 
     }
@@ -111,6 +110,7 @@ export default {
     console.error('Error fetching data:', error);
     throw error;
   }
+  this.processing = false
 
     }
   }

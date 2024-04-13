@@ -66,7 +66,7 @@
           </div> -->
           <div class="space-y-1">
             <label class="text-xs text-gray-700 font-medium">Upload Image</label>
-            <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css">
+            <!-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.4/dist/flowbite.min.css"> -->
 
             <div v-if="!imagePreview" class="max-w-2xl mx-auto">
               <div class="flex items-center justify-center w-full">

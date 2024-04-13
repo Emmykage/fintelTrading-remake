@@ -163,13 +163,13 @@ export default {
             },
             body: JSON.stringify({user: this.user})
           }
-        )
-        const data = await response.json()
-        if (data?.errors) {
-          this.$toastr.e(data.errors[0].message)
+        ).then(res=> res.json())
+        if (response?.error) {
+          this.$toastr.e(response.error)
+          console.log("first", response)
         } else {
-          window.localStorage.setItem('auth', JSON.stringify(data?.data?.newUser?.token))
-          window.localStorage.setItem('user', JSON.stringify(data?.data?.newUser?.user))
+          window.localStorage.setItem('auth', JSON.stringify(response?.token))
+          window.localStorage.setItem('user', JSON.stringify(response?.user))
           this.$toastr.s('Signup was successful')
           this.$router.push('/login')
         }

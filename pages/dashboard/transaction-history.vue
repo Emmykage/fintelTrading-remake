@@ -233,7 +233,7 @@ export default {
 
 
       try {
-        const response = await fetch(`${baseUrl}transactions`, {
+        const response = await fetch(`${baseUrl}transactions/user_transaction`, {
           method: 'GET',
           headers: {
             'content-type': 'application/json',

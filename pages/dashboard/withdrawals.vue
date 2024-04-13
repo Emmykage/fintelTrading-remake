@@ -142,7 +142,6 @@ export default {
             })
           }
         ).then(res => res.json())
-        // const data = await response.json()
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
