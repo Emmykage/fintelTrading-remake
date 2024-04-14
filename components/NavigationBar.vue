@@ -6,7 +6,7 @@
           <img src="@/assets/img/Fidelitysvalues.png" class="h-10 w-10" alt="">
         </nuxt-link>
         <ul class="items-stretch hidden space-x-3 lg:flex">
-          <li v-for="{title, url} in navigationItems" class="flex items-center gap-x-3">
+          <li v-for="{title, url} in navigationItems" :key="title" class="flex items-center gap-x-3">
             <nuxt-link  :key="title" :to="url" rel="noopener noreferrer" class="flex text-white text-sm items-center px-4 -mb-1">
               {{ title }}
             </nuxt-link>
