@@ -194,7 +194,14 @@ export default {
     },
 
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+      const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
+
+      try {
+    return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  } catch (error) {
+    console.error("Error formatting number:", error);
+    return "Error formatting number";
+  }
     },
     formatDateTime(date) {
       // Check if date is a string and convert it to a Date object

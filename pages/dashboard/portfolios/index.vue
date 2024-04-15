@@ -23,7 +23,7 @@
         <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:w-[27%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
           <h3 class="text-xl font-semibold text-center my-3 text-red-600  underline">{{plan.value}}</h3>
           <p class="text-center text-gray-900">@</p>
-          <h2 class="text-center text-3xl font-medium text-gray-600 my-3">29% </h2>
+          <h2 class="text-center text-3xl font-medium text-gray-600 my-3">{{Math.floor(plan.rate * 30 * 100)}}% </h2>
           <div class="flex justify-center w-[75%] m-auto font-semibold text-center">
               <!-- <span>Value</span> -->
               <span>{{formatNumberAsDollar(amount)}}</span>
@@ -172,9 +172,15 @@ export default {
       }
     },
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-    }
+      const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
 
+      try {
+    return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  } catch (error) {
+    console.error("Error formatting number:", error);
+    return "Error formatting number";
+  }
+    }
 
   }
 

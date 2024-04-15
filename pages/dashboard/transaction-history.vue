@@ -242,9 +242,10 @@ export default {
 
         }).then(res => res.json())
         // const data = await response.json()
-        if (response?.errors) {
+        if (response?.error) {
           this.$toastr.e(response.error)
         } else {
+          console.log(response)
           this.transactionsList = response
           this.totalRows = response.length
         }
@@ -267,7 +268,14 @@ export default {
       }
     },
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+      const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
+
+      try {
+    return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  } catch (error) {
+    console.error("Error formatting number:", error);
+    return "Error formatting number";
+  }
     }
   }
 }

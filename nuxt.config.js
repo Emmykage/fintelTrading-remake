@@ -76,11 +76,13 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'bootstrap-vue/nuxt'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
