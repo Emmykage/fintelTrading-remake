@@ -85,7 +85,7 @@
 
                   <div>
                     <p class="text-xs">
-                      <strong class="block font-medium">{{ loggedUser?.firstName ?? "" }}
+                      <strong class="block font-medium">jon doe{{ loggedUser?.firstName ?? "" }}
                         {{ loggedUser?.lastName ?? "" }}</strong>
 
                       <span> {{ loggedUser?.email ?? "" }}</span>
@@ -117,9 +117,17 @@
     </div>
     <div class="flex justify-end items-end gap-x-2.5 py-3">
       <div class="bg-white rounded-full border p-2.5">
+        <nuxt-link to="/dashboard/profile">
+
+
         <img src="@/assets/img/user.svg" alt="userIcon">
+      </nuxt-link>
       </div>
-      <div class="bg-white rounded-full border p-2.5">
+      <div class="relative bg-white rounded-full border p-2.5   ">
+        <div class="text-gray-800 h-7 w-7 bg-red-300 absolute -top-1 -right-3 rounded-full justify-center flex items-center">
+          0
+
+        </div>
         <img src="@/assets/img/notification.svg" alt="notificationIcon">
       </div>
     </div>
@@ -153,6 +161,11 @@ export default {
           name: 'Withdraw',
           icon: 'deposit',
           url: '/dashboard/withdrawals'
+        },
+         {
+          name: 'Portfolios',
+          icon: 'portfolio',
+          url: '/dashboard/Portfolios'
         },
         {
           name: 'Buy plans',

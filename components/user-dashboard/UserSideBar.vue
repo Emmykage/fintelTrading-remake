@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-2/12 h-screen flex-col justify-between bg-blue-50"
+    class="flex w-2/12 h-screen flex-col justify-between bg-blue-50 overflow-y-auto"
   >
     <div class="px-4 py-6 relative">
       <span
@@ -43,7 +43,7 @@
       </div> -->
     </div>
 
-    <div class="absolute bottom-0 inset-x-0  px-4 py-4 hover:bg-gray-50 space-y-10">
+    <div class=" bottom-0 inset-x-0  px-4 py-4 hover:bg-gray-50 space-y-10">
       <div>
         <button class="w-full flex justify-center items-center gap-x-3 py-2.5 mt-16 rounded-md bg-red-500 text-white" @click="handleLogout">
           Logout
