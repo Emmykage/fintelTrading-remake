@@ -248,7 +248,6 @@ export default {
         } else {
           this.transactionsList = response
           this.totalRows = response.length
-          console.log(response)
         }
       } finally {
         this.loading = false

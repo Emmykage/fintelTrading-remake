@@ -362,7 +362,6 @@ export default {
         } else {
           this.usersList = response
           this.totalRows = response.length
-          console.log(response)
         }
       } finally {
         this.loading = false
@@ -381,8 +380,7 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const user = JSON.parse(window.localStorage.getItem('user'))
-      console.log('first time')
-      console.log(this.selectedUser.top_portfolio)
+      // console.log(this.selectedUser.top_portfolio)
 
       try {
 

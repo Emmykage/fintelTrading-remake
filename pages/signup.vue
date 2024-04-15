@@ -166,8 +166,8 @@ export default {
         ).then(res=> res.json())
         if (response?.error) {
           this.$toastr.e(response.error)
-          console.log("first", response)
         } else {
+
           window.localStorage.setItem('auth', JSON.stringify(response?.token))
           window.localStorage.setItem('user', JSON.stringify(response?.user))
           this.$toastr.s('Signup was successful')

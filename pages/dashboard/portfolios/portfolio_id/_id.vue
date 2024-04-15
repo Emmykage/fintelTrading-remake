@@ -207,14 +207,9 @@ export default {
     async fetchPortfolio() {
       const id = this.$route.params.id
 
-      console.log(id )
 
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-
-      // const postId = params.id;
-
-      // console.log(postId)
 
 
       try {
@@ -233,7 +228,6 @@ export default {
           this.portfolio = response
           this.portfolio_interests = response.portfolio_interests
           this.totalRows = response.portfolio_interests.length
-          console.log(this.portfolio_interests)
         }
       } finally {
         this.loading = false

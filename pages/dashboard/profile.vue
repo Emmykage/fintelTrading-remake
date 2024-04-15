@@ -123,7 +123,6 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.updatedUserData = response
-          console.log(response)
         }
       } finally {
         this.loading = false

@@ -101,8 +101,6 @@ export default {
       window.localStorage.setItem('user', JSON.stringify(response?.user))
       this.$toastr.s('Login was successful')
       this.$router.push('/dashboard')
-      console.log(response)
-      // return response.data;
 
     }
 

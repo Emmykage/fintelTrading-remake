@@ -238,7 +238,6 @@ export default {
   },
   mounted () {
     this.startSlider()
-    console.log(baseUrl)
 
     // this.$bvModal.show('bv-modal-example')
   },

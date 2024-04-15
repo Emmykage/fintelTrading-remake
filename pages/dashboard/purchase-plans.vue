@@ -59,14 +59,12 @@ export default {
         try {
           const response = await fetch(`${baseUrl}plans`)
           .then(res => res.json())
-          console.log(response)
           this.plans = response
           if (response.error) {
             this.$toastr.e(response.error)
 
           } else {
             this.plans = response
-            console.log(response)
           }
         } catch (error) {
           this.$toastr.e(response.error)
@@ -123,7 +121,6 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.userData = response
-          // console.log(response)
         }
       } finally {
         this.loading = false

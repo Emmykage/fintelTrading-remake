@@ -16,6 +16,10 @@
 
 
       <div  class="flex justify-start gap-[2%]">
+
+        <div></div>
+
+        <h2 v-if="portfolioList.length === 0" class="text-2xl font-semibold mb-4 text-center">No Plan has been purchased yet</h2>
         <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:w-[27%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
           <h3 class="text-xl font-semibold text-center my-3 text-red-600  underline">{{plan.value}}</h3>
           <p class="text-center text-gray-900">@</p>
@@ -132,7 +136,6 @@ export default {
     async fetchPortfolios(){
       this.loading = true
       const accessToken = JSON.parse(localStorage.getItem("auth"))
-      console.log(accessToken)
       try {
         const response = await fetch(`${baseUrl}portfolios`, {
           method: "GET",
@@ -147,7 +150,6 @@ export default {
           this.userInfo = response
           this.portfolioList = response
 
-          console.log(response)
         }
 
       } catch (error) {

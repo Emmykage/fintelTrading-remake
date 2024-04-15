@@ -253,7 +253,6 @@ export default {
         } else {
           this.transactionsList = response.filter(itm => itm.transaction_type === 'withdrawal')
           this.totalRows = this.transactionsList.length
-          console.log(this.transactionsList)
         }
       } finally {
         this.loading = false

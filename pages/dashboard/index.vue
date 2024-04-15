@@ -178,7 +178,6 @@ export default {
 
         })
         .then(res => res.json())
-        console.log(response)
 
 
         if (response?.error) {
@@ -187,7 +186,6 @@ export default {
           this.wallet = response
           this.transactionsList = response.transactions
 
-          console.log(response.wallet_balance)
 
         }
       } finally {

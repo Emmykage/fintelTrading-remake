@@ -127,7 +127,6 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.stats = response
-          console.log(response)
         }
       } finally {
         this.loading = false

@@ -242,7 +242,6 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.adminData = response
-          // console.log(this.adminData)
 
         }
       } finally {
@@ -266,7 +265,6 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.pocketAddress = response
-          console.log(response)
 
         }
       } finally {
