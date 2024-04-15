@@ -186,7 +186,6 @@ export default {
           this.wallet = response
           this.transactionsList = response.transactions
 
-
         }
       } finally {
         this.loading = false

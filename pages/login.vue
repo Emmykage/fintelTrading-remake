@@ -96,7 +96,7 @@ export default {
     if (response?.error) {
       this.$toastr.e(response.error)
     } else {
-
+      // console.log(response)
       window.localStorage.setItem('auth', JSON.stringify(response?.token))
       window.localStorage.setItem('user', JSON.stringify(response?.user))
       this.$toastr.s('Login was successful')
