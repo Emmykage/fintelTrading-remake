@@ -135,11 +135,11 @@ export default {
         ? [
           {
             name: 'Bitcoin',
-            code: this.pocketAddress?.btc ?? '1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71.'
+            code: this.pocketAddress?.btc ?? 'N/A.'
           },
           {
             name: 'Ethereum erc-20',
-            code: this.pocketAddress?.eth ?? '0xb794f5ea0ba39494ce839613fffba74279579268'
+            code: this.pocketAddress?.eth ?? 'N/A'
           },
           {
             name: 'Bank Account',
