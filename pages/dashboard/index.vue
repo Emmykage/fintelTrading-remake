@@ -1,10 +1,10 @@
 <template>
   <main class="space-y-6">
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-      <div class=" lg:col-span-2  border-blue-500">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-1 lg:gap-8">
+      <!-- <div class=" lg:col-span-2  border-blue-500">
         <div class="cryptohopper-web-widget" data-id="4"
           data-coins="bitcoin,ethereum,bnb,usd-coin,litecoin,trust-wallet-token" data-numcoins="50" />
-      </div>
+      </div> -->
       <div class="rounded-lg bg-blue-50 border">
         <div class="flex justify-between items-center px-3">
           <div class="py-2">
