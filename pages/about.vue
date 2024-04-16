@@ -1,7 +1,7 @@
 <template>
   <main>
     <section class="overflow-hidden bg-[url(@/assets/img/team-members.jpg)] bg-cover bg-top bg-no-repeat">
-      <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24 py-60" data-aos="fade-up" data-aos-delay="300">
+      <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24 py-60">
         <div class="text-center flex justify-center items-center flex-col ltr:sm:text-left rtl:sm:text-right space-y-6">
           <h2 class="text-2xl font-bold text-white sm:text-3xl md:text-5xl">
             Our story
@@ -17,7 +17,7 @@
     </section>
     <section class="text-gray-600 body-font bg-white">
       <div class="md:container md:px-5 py-24 mx-auto flex flex-wrap flex-col">
-        <div class="flex w-11/12 md:w-6/12 mx-auto justify-center items-center flex-wrap mb-20" data-aos="zoom-in" data-aos-delay="500">
+        <div class="flex w-11/12 md:w-6/12 mx-auto justify-center items-center flex-wrap mb-20" >
           <a href="#whoweare" class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium bg-gray-100 inline-flex items-center leading-none border-indigo-500 text-indigo-500 tracking-wider rounded-t">
             <svg
               fill="none"
@@ -59,7 +59,7 @@
             </svg>Our values
           </a>
         </div>
-        <div id="whoweare" class="flex flex-col text-center md:w-full mx-auto w-11/12" data-aos="zoom-in" data-aos-delay="500">
+        <div id="whoweare" class="flex flex-col text-center md:w-full mx-auto w-11/12" >
           <h1 class="text-2xl md:text-4xl font-bold title-font mb-4 text-gray-900">
             Who we are
           </h1>
@@ -76,7 +76,7 @@
             </p>
           </div>
         </div>
-        <div id="meettheteam" data-aos="fade-up" data-aos-delay="300">
+        <div id="meettheteam">
           <div class="mx-auto px-4 py-16 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
               <div class="relative z-10 lg:py-16">
@@ -116,7 +116,7 @@
             </div>
           </div>
         </div>
-        <div id="ourvalues" class="text-gray-900 body-font mt-10" data-aos="zoom-in" data-aos-delay="500">
+        <div id="ourvalues" class="text-gray-900 body-font mt-10">
           <h1 class="md:text-4xl text-2xl text-center font-bold">
             Our values
           </h1>
