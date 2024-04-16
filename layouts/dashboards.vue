@@ -234,7 +234,7 @@ export default {
     this.onResize()
     window.addEventListener('resize', this.onResize, { passive: true })
     const user = JSON.parse(window.localStorage.getItem('user'))
-    if (user && user.role !== "admin") {
+    if (!user && user.role !== "admin") {
       this.$router.push('/admin')
     } else {
       this.loggedUser = user
@@ -264,7 +264,7 @@ export default {
         if (result.value) {
           window.localStorage.removeItem('user')
           window.localStorage.removeItem('auth')
-          // this.$router.push('/admin')
+          this.$router.push('/admin')
         } else {
           this.$swal('Cancelled', "You're still logged in!", 'info')
         }

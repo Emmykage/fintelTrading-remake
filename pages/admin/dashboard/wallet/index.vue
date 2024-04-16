@@ -203,7 +203,7 @@ export default {
       this.loading = true
 
       try {
-        const response = await fetch(`${baseUrl}wallets/get_adminstat`, {
+        const response = await fetch(`${baseUrl}wallets`, {
           method: 'GET',
           headers: {
             'content-type': 'application/json',
@@ -213,10 +213,10 @@ export default {
         }).then(res => res.json())
 
         if (response?.error) {
-          // this.$toastr.e(response.errors)
+          this.$toastr.e(response.error)
         } else {
-          // this.tradingBalance = response?.data?.getAdminStats?.tradingBalance
-          this.tradingBalance = response
+          this.tradingBalance = response.profits
+          // console.log(response)
 
         }
       } finally {
@@ -271,9 +271,11 @@ export default {
         this.loading = false
       }
     },
+
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-    }
+      const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
+      return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    },
   }
 }
 </script>

@@ -200,13 +200,7 @@ export default {
 
     formatNumberAsDollar(number) {
       const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
-
-      try {
-    return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  } catch (error) {
-    console.error("Error formatting number:", error);
-    return "Error formatting number";
-  }
+      return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     },
     formatDateTime(date) {
       // Check if date is a string and convert it to a Date object

@@ -180,6 +180,8 @@ export default {
       })
     },
 
+
+
     fetchUSer() {
       let fetched
       this.loggedUser =   JSON.parse(localStorage.getItem("user"))
