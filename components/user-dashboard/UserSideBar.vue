@@ -59,8 +59,8 @@
 
           <div>
             <p class="text-xs">
-              <strong class="block font-medium">{{ loggedUser?.firstName ?? "" }}
-                {{ loggedUser?.lastName ?? "" }}</strong>
+              <strong class="block font-medium">{{ loggedUser?.first_name ?? "" }}
+                {{ loggedUser?.last_name ?? "" }}</strong>
 
               <span> {{ loggedUser?.email ?? "" }}</span>
             </p>
@@ -140,7 +140,9 @@ export default {
   mounted () {
     this.onResize()
     window.addEventListener('resize', this.onResize, { passive: true })
-    const user = JSON.parse(window.localStorage.getItem('user'))
+
+    this.fetchUSer()
+    // const user = JSON.parse(window.localStorage.getItem('user'))
     // if (!user) {
     //   this.$router.push('/login')
     // } else {
@@ -176,6 +178,12 @@ export default {
           this.$swal('Cancelled', "You're still logged in!", 'info')
         }
       })
+    },
+
+    fetchUSer() {
+      let fetched
+      this.loggedUser =   JSON.parse(localStorage.getItem("user"))
+
     }
   }
 }

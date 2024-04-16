@@ -182,7 +182,13 @@ export default {
 
         if (response?.error) {
           this.$toastr.e(response.error)
-        } else {
+        }
+        else if(response?.message){
+          this.$toastr.e(response.message)
+
+        }
+        else {
+          console.log(response)
           this.wallet = response
           this.transactionsList = response.transactions
 

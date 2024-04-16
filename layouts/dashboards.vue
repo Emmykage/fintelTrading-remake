@@ -234,7 +234,7 @@ export default {
     this.onResize()
     window.addEventListener('resize', this.onResize, { passive: true })
     const user = JSON.parse(window.localStorage.getItem('user'))
-    if (user === null) {
+    if (user && user.role !== "admin") {
       this.$router.push('/admin')
     } else {
       this.loggedUser = user
