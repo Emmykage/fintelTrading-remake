@@ -237,7 +237,7 @@ export default {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       // this.loading = true
-      const id = "b5324daa-4d89-4ebf-97d1-c454603c4e87"
+      const id = this.$route.params.id
 
       try {
         const response = await fetch(`${baseUrl}portfolios/${id}`, {

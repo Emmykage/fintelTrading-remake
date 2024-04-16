@@ -17,23 +17,26 @@
 
       <div  class="flex justify-start gap-[2%]">
 
-        <div></div>
 
         <h2 v-if="portfolioList.length === 0" class="text-2xl font-semibold mb-4 text-center">No Plan has been purchased yet</h2>
-        <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:w-[27%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer" @click="handleNav(id)">
-          <h3 class="text-xl font-semibold text-center my-3 text-red-600  underline">{{plan.value}}</h3>
-          <p class="text-center text-gray-900">@</p>
-          <h2 class="text-center text-3xl font-medium text-gray-600 my-3">{{Math.floor(plan.rate * 30 * 100)}}% </h2>
-          <div class="flex justify-center w-[75%] m-auto font-semibold text-center">
-              <!-- <span>Value</span> -->
-              <span>{{formatNumberAsDollar(amount)}}</span>
 
-          </div>
-          <span v-if="status == 'active'" class="absolute top-0 right-0 bg-green-500 px-4">active</span>
-          <span v-else class="absolute top-0 right-0 bg-gray-400 px-4">inactive</span>
-
-        </a>
       </div>
+      <div class="relative flex  flex-col sm:flex-row gap-5">
+      <a v-for="{plan, status, id, amount} in portfolioList" :key="id" class="relative basis-[100%] sm:basis-[40%] lg:w-[27%] border rounded-md h-48 hover:shadow-slate-400 bg-gray-50 cursor-pointer pt-1" @click="handleNav(id)">
+        <h3 class="text-xl border-b font-semibold text-center my-3 text-gray-600">{{plan.value}}</h3>
+        <p class="text-center text-gray-900">@</p>
+        <h2 class="text-center text-2xl font-medium text-gray-600 my-3">{{Math.floor(plan.rate * 30 * 100)}}% </h2>
+        <div class="flex justify-center w-[75%] m-auto font-semibold text-center">
+            <!-- <span>Value</span> -->
+            <span class="text-green-600 text-lg">{{formatNumberAsDollar(amount)}}</span>
+
+        </div>
+        <span v-if="status == 'active'" class="absolute top-0 right-0 bg-green-500/30 px-4">active</span>
+        <span v-else class="absolute top-0 right-0 bg-gray-400 px-4">inactive</span>
+
+      </a>
+    </div>
+
     </section>
   </main>
 </template>
