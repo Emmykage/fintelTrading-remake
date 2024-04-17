@@ -133,7 +133,7 @@
           </b-table>
 
           <div class="flex justify-end items-end">
-            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" size="md" class="my-3  bg-gray-800 w-80 flex" />
+            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" size="md" class="my-3" />
           </div>
         </b-card>
         <!-- </div> -->
@@ -330,7 +330,7 @@ export default {
     },
     handleAction(id, type) {
       Swal.fire({
-        title: `${type === 'approve' ? 'Approve' : 'Reject'} Deposit`,
+        title: `${type === 'approved' ? 'Approve' : 'Reject'} Deposit`,
         text: "Please Note: You won't be able to revert this!",
         type: 'warning',
         showCancelButton: true,
