@@ -15,7 +15,7 @@
 
           </p>
 
-          <a class="text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction(id, 'inactive')">liquidate Asset</a>
+          <a class="text-gray-50 bg-slate-800 py-2 px-4" >Profit Repatriation</a>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
         </div>
 
@@ -240,16 +240,15 @@ export default {
       const id = this.$route.params.id
 
       try {
-        const response = await fetch(`${baseUrl}portfolios/${id}`, {
-          method: 'PATCH',
+        const response = await fetch(`${baseUrl}portfolios/${id}/liquidate_profit`, {
+          method: 'PUT',
           headers: {
             'content-type': 'application/json',
             authorization: 'Bearer ' + accessToken
           },
-          body: JSON.stringify({portfolio: {status: inactive}})
+          // body: JSON.stringify({portfolio: {status: inactive}})
 
         }).then(res => res.json())
-        // const data = await response.json()
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
