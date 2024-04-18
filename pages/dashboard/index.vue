@@ -36,7 +36,7 @@
                     Profits
                   </p>
                   <p class="text-lg font-semibold text-white">
-                    {{ formatNumberAsDollar(wallet?.profits ) ?? '0.00' }}
+                    {{ formatNumberAsDollar(wallet?.total_profits ) ?? '0.00' }}
                   </p>
                 </div>
               </div>
@@ -191,6 +191,7 @@ export default {
           console.log(response)
           this.wallet = response
           this.transactionsList = response.transactions
+          console.log(response)
 
         }
       } finally {

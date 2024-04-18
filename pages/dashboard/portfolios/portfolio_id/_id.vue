@@ -15,7 +15,7 @@
 
           </p>
 
-          <a class="text-gray-50 bg-slate-800 py-2 px-4" >Profit Repatriation</a>
+          <a class="text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction()">Profit Repatriation</a>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
         </div>
 
@@ -110,6 +110,11 @@ export default {
           label: 'Amount',
           class: 'font-medium text-gray-400 text-sm'
         },
+        {
+          key: 'withdrawn',
+          label: 'withdrawn',
+          class: 'font-medium text-gray-400 text-sm'
+        },
 
         {
           key: 'timeAdded',
@@ -187,9 +192,9 @@ export default {
     goBack() {
       this.$router.go(-1)
     },
-    handleAction(id, type) {
+    handleAction() {
       Swal.fire({
-        title: `${type === 'inactive' ? 'Liquidate' : 'Reject'} Portfolio`,
+        title: `Withdraw  Portfolio Interest`,
         text: "Please Note: You won't be able to revert this!",
         type: 'warning',
         showCancelButton: true,
@@ -198,7 +203,7 @@ export default {
         confirmButtonText: 'Yes, Proceed!'
       }).then((result) => {
         if (result.value) {
-          this.handleLiquid(type)
+          this.handleLiquid()
         } else {
           this.$swal('Cancelled', 'Action was cancelled', 'info')
         }
@@ -210,8 +215,6 @@ export default {
 
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-
-
       try {
         const response = await fetch(`${baseUrl}portfolios/${id}`, {
           method: 'GET',
@@ -233,7 +236,7 @@ export default {
         this.loading = false
       }
     },
-    async handleLiquid(inactive) {
+    async handleLiquid() {
       this.loading = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       // this.loading = true
@@ -275,8 +278,9 @@ export default {
       }
     },
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-    }
+      const parsedNumber = typeof number === 'number' ? number : parseFloat(number);
+      return parsedNumber?.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    },
   }
 }
 </script>
