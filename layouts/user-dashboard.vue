@@ -9,6 +9,7 @@
         <Nuxt />
       </div>
     </div>
+    <!-- <tawk-messenger /> -->
   </main>
 </template>
 

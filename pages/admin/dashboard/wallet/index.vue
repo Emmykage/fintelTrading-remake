@@ -215,8 +215,7 @@ export default {
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {
-          this.tradingBalance = response.profits
-          console.log(response)
+          this.tradingBalance = response.total_profits
 
         }
       } finally {

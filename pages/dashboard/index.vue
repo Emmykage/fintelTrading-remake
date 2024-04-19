@@ -188,10 +188,8 @@ export default {
 
         }
         else {
-          console.log(response)
           this.wallet = response
           this.transactionsList = response.transactions
-          console.log(response.total_profits)
 
         }
       } finally {
