@@ -118,7 +118,7 @@
               <div class="py-4 ">
                 <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
                   <button class="text-white text-xs bg-green-500 w-full py-1.5 px-2 rounded-full"
-                    @click="handleAction(data.item, 'approved')">
+                    @click="handleAction(data.item, 'approve')">
                     Approve
                   </button>
                   <button class="text-white text-xs bg-red-500 w-full py-1.5 px-2 rounded-full"
@@ -295,7 +295,7 @@ export default {
     async processTransaction(transactionId, status) {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
-      const statusType = status === 'approve' ? 'Approved' : status === 'reject' ? 'Declined' : 'Pending'
+      // const statusType = status === 'approve' ? 'Approved' : status === 'reject' ? 'Declined' : 'Pending'
       try {
 
         const response = await fetch(`${baseUrl}transactions/${transactionId}`,
