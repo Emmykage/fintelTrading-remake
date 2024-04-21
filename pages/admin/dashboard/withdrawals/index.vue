@@ -118,7 +118,7 @@
               <div class="py-4 ">
                 <div v-if="data?.item?.status === 'pending'" class="flex items-center gap-x-3">
                   <button class="text-white text-xs bg-green-500 w-full py-1.5 px-2 rounded-full"
-                    @click="handleAction(data.item, 'approve')">
+                    @click="handleAction(data.item, 'approved')">
                     Approve
                   </button>
                   <button class="text-white text-xs bg-red-500 w-full py-1.5 px-2 rounded-full"
@@ -277,7 +277,7 @@ export default {
     },
     handleAction(data, type) {
       Swal.fire({
-        title: `${type === 'approve' ? 'Approve' : 'Reject'} Withdrawal`,
+        title: `${type === 'approved' ? 'Approve' : 'Reject'} Withdrawal`,
         text: "Please Note: You won't be able to revert this!",
         type: 'warning',
         showCancelButton: true,
@@ -312,7 +312,7 @@ export default {
         if (data?.errors) {
           this.$toastr.e(data.errors[0].message)
         } else {
-          this.$toastr.s(`You have successfully ${status === 'approve' ? 'Approved' : 'Rejected'} this transaction.`)
+          this.$toastr.s(`You have successfully ${status === 'approved' ? 'Approved' : 'Rejected'} this transaction.`)
         }
       } finally {
         this.processing = false
