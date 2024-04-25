@@ -18,7 +18,7 @@
         <input v-model="form.amount" class="py-2.5 border rounded-md w-full outline-none pl-6">
         <span class="text-xs font-medium text-red-500">Note that plan amount must be available in your account balance
           of
-          {{ formatNumberAsDollar(userData?.balance) ?? '0.00' }}.</span>
+          {{ formatNumberAsDollar(userData?.wallet_balance) ?? '0.00' }}.</span>
       </div>
       <button :class="[
       !isFormEmpty || processing ? 'opacity-25 cursor-not-allowed' : '',
@@ -98,7 +98,7 @@ export default {
       }
     },
     formatNumberAsDollar(number) {
-      return number?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+      return parseFloat(number)?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
     },
     async getUserInfo() {
       this.loading = true
@@ -116,7 +116,6 @@ export default {
           },
 
         }).then(res => res.json())
-        const data = await response.json()
         if (response?.error) {
           this.$toastr.e(response.error)
         } else {

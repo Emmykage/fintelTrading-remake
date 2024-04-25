@@ -65,6 +65,14 @@
                 </span> Weekly/monthly payouts
               </p>
 
+              <p class="px-6 pt-2 font-semibold flex text-sm text-gray-800 mb-2">
+                <span class="w-4 h-4 mr-2 mt-1 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" class="w-3 h-3" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5"></path>
+                  </svg>
+                </span> 2 yrs trading contract
+              </p>
+
               <!-- <p class="flex items-center text-gray-600 mb-6">
                 <span class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" class="w-3 h-3" viewBox="0 0 24 24">
@@ -149,6 +157,19 @@
                     <path d="M20 6L9 17l-5-5"></path>
                   </svg>
                 </span> Private fund manager
+              </p>
+              <p class="px-6 pt-2 font-semibold flex text-sm text-gray-800 mb-2">
+                <span class="w-4 h-4 mr-2 mt-1 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" class="w-3 h-3" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5"></path>
+                  </svg>
+                </span>  copy trading
+              </p>      <p class="px-6 pt-2 font-semibold flex text-sm text-gray-800 mb-2">
+                <span class="w-4 h-4 mr-2 mt-1 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" class="w-3 h-3" viewBox="0 0 24 24">
+                    <path d="M20 6L9 17l-5-5"></path>
+                  </svg>
+                </span> Non farm payroll
               </p>
               <!-- <p class="flex items-center text-gray-600 mb-6">
                 <span class="w-4 h-4 mr-2 inline-flex items-center justify-center bg-gray-400 text-white rounded-full flex-shrink-0">
