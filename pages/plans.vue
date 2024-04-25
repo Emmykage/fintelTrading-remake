@@ -11,8 +11,8 @@
           </div>
         </div>
         <div class="flex items-start justify-center flex-wrap -m-4 gap-5">
-          <div class="xl:w-1/4 md:w-1/2 w-full text-white bg-white">
-            <div class="h-full p-0 rounded-lg shadow flex flex-col relative overflow-hidden">
+          <div class="xl:w-1/4 md:w-1/2 w-full text-white">
+            <div class="h-full bg-white p-0 rounded-lg shadow flex flex-col relative overflow-hidden">
               <div class="h-64 bg-gray-100 text-center py-5">
                 <h2 class="text-lg text-center tracking-widest title-font mb-1 font-semibold text-gray-800">Platinum Plan </h2>
                 <!-- <h1 class="text-5xl text-gray-900 pb-4 mb-4 border-b border-gray-200 leading-none">$400 to $4999</h1> -->
@@ -76,8 +76,8 @@
 
             </div>
           </div>
-          <div class="xl:w-1/4 md:w-1/2 w-full text-white bg-white">
-            <div class="h-full p-0 rounded-lg shadow flex flex-col relative overflow-hidden">
+          <div class="xl:w-1/4 md:w-1/2 w-full text-white ">
+            <div class="h-full bg-white p-0 rounded-lg shadow flex flex-col relative overflow-hidden">
               <div class="h-64 bg-gray-100 text-center py-5">
                 <h2 class="text-lg text-center tracking-widest title-font mb-1 font-semibold text-gray-800">Diamond Plan </h2>
                 <!-- <h1 class="text-5xl text-gray-900 pb-4 mb-4 border-b border-gray-200 leading-none">$400 to $4999</h1> -->
