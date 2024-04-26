@@ -1,5 +1,5 @@
 <template>
-    <main class="">
+    <main class="relative">
       <navigation-bar />
       <Nuxt />
       <footer-section />
@@ -20,7 +20,7 @@
       </div>
     </main>
   </template>
-  
+
   <style>
   .page-enter-active,
   .page-leave-active {
@@ -30,7 +30,7 @@
   .page-leave-to {
     opacity: 0;
   }
-  
+
   .layout-enter-active,
   .layout-leave-active {
     transition: opacity 0.5s;
@@ -39,7 +39,7 @@
   .layout-leave-to {
     opacity: 0;
   }
-  
+
   .slide-bottom-enter-active,
   .slide-bottom-leave-active {
     transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
@@ -79,7 +79,7 @@
       transform: scale(0);
     }
   }
-  
+
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
       Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
@@ -87,4 +87,3 @@
     margin: 0;
   }
   </style>
-  

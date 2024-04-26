@@ -70,7 +70,7 @@
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" class="w-3 h-3" viewBox="0 0 24 24">
                     <path d="M20 6L9 17l-5-5"></path>
                   </svg>
-                </span> 2 yrs trading contract
+                </span> 2 years trading contract
               </p>
 
               <!-- <p class="flex items-center text-gray-600 mb-6">
