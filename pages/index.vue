@@ -192,15 +192,18 @@
       <div id="chart-widget" />
     </div>
     <div class="ad-modal-backdrop" :class="{'hide' : isModalHidden }">
-      <div class="ad-modal bg-blue-100 rounded-md bg-gradient-to-r from-blue-300 to-white">
+      <div class="ad-modal bg-blue-100/10 rounded-md">
         <div class="text-right px-4 py-2">
-          <span class="cursor-pointer text-4xl font-semibold block ml-auto w-max bg-gray-50" @click="toggleModal">
+          <span class="cursor-pointer text-4xl font-semibold block ml-auto w-max bg-gray-50 transition-all ease-out duration-300 hover:scale-110
+          <!-- bg-gradient-to-r from-blue-300 to-white -->
+          " @click="toggleModal">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
           </span>
         </div>
         <!-- <h1 class="text-center font-semibold text-4xl mt-0">Get </h1> -->
-        <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p>
-        <h1 class="text-center text-gray-500 text-3xl mt-3 font-medium">Off On Every Deposit</h1>
+        <!-- <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p> -->
+        <div class="text-center"><img class="block w-max m-auto" src="~/assets/img/fifteen-off.png" alt=""></div>
+        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 15% Bonus On Every Deposit</h1>
       </div>l
     </div>
   </div>
@@ -262,6 +265,8 @@ export default {
       sessionStorage.setItem('trackmodal', true)
 
     }
+    // sessionStorage.setItem('trackmodal', true)
+
   },
   unmounted () {
     clearInterval(this.timer)
@@ -303,7 +308,7 @@ export default {
   }
 
   .ad-modal-backdrop{
-    background-color: rgba(255, 255, 255, 0.301);
+    background-color: rgba(0, 0, 0, 0.601);
     position: fixed;
     top: 0px;
     left: 0px;
@@ -313,6 +318,7 @@ export default {
     height: 100vh;
     width: 100%;
     transition: opacity 0.3s ease;
+    z-index: 99;
 
   }
   .ad-modal{
