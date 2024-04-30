@@ -37,11 +37,8 @@ export default {
       },
       {
         id: 'tradingview',
-        src: 'https://www.cryptohopper.com/widgets/js/script'
-      },
-      {
-        id: "news",
-        src:"https://www.cryptohopper.com/widgets/js/script"
+        src: 'https://www.cryptohopper.com/widgets/js/script',
+        async: true
       }
     ]
   },

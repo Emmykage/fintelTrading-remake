@@ -4,10 +4,10 @@
     <div class="w-11/12 md:w-10/12 mx-auto rounded-md p-6 text-gray-900 bg-white space-y-6">
       <div>  <h1 class="text-2xl text-gray-900 font-medium">Latest Trading News</h1></div>
       <!-- <div class="cryptohopper-web-widget" data-id="5" data-news_count="5" data-news_length="10"></div> -->
-      <div class="cryptohopper-web-widget" data-id="5"></div>
+      <div class="cryptohopper-web-widget" data-id="5" data-news_count="5"></div>
     </div>
     <section class="bg-[#003b6d]">
-      <div class="cryptohopper-web-widget" data-id="2"></div>
+
       <div class="container max-w-xl p-6 py-12 mx-auto space-y-10 lg:px-8 lg:max-w-7xl">
         <div>
           <h2 class="lg:text-3xl text-2xl font-bold text-center sm:text-5xl dark:text-gray-50">
