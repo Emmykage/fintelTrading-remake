@@ -49,7 +49,7 @@
               Bitcoin
             </option>
             <option value="ethereum">
-              Etheruem
+              Ethereum
             </option>
             <option value="bank">
               Bank Account
