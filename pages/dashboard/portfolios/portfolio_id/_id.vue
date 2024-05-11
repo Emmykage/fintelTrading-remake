@@ -54,9 +54,18 @@
 
             <template #cell(amount)="data">
               <div class="py-4">
-                <span class="font-medium py-2 text-sm cursor-pointer">
+                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'gray' : 'green' }">
                   {{
             formatNumberAsDollar(data?.item?.interest)
+          }}
+                </span>
+              </div>
+            </template>
+            <template #cell(withdrawn)="data">
+              <div class="py-4">
+                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'gray' : 'green' }">
+                  {{
+            (data?.item?.withdrawn ? "--" : "profit")
           }}
                 </span>
               </div>
@@ -228,6 +237,7 @@ export default {
         if (response?.errors) {
           this.$toastr.e(response.error)
         } else {
+          console.log(response)
           this.portfolio = response
           this.portfolio_interests = response.portfolio_interests
           this.totalRows = response.portfolio_interests.length
