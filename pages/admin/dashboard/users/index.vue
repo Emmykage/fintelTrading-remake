@@ -97,15 +97,15 @@
             <template #cell(profit)="data">
               <div class="font-medium py-4 text-sm">
                 {{
-            formatNumberAsDollar(data?.item?.wallet?.profits) ?? 'N/A'
+            formatNumberAsDollar(data?.item?.total_earnings) ?? 'N/A'
           }}
               </div>
             </template>
 
-            <template #cell(eth)="data">
+            <template #cell(bonus)="data">
               <div class="font-medium py-4 text-sm">
-                <span v-if="data.item.eth" class="font-medium py-4 text-sm">
-                  {{ data.item.eth }}
+                <span v-if="data?.item?.wallet?.bonus" class="font-medium py-4 text-sm text-gray-800">
+                  {{ formatNumberAsDollar(data?.item?.wallet?.bonus) }}
                 </span>
                 <span v-else>N/A</span>
               </div>
@@ -131,7 +131,7 @@
             </template>
             <template #cell(action)="data">
               <div class="font-medium text-sm cursor-pointer px-3 py-4">
-                <img src="@/assets/icons/actions.svg" alt="more" class="cursor-pointer h-10 w-10"
+                  <img src="@/assets/icons/actions.svg" alt="more" class="cursor-pointer h-10 w-10"
                   @click="handleClick(data.item)">
               </div>
             </template>
@@ -161,10 +161,10 @@
 
         <div class="col-span-6 sm:col-span-6">
           <label for="tradingBalance" step="0.01" min="0" class="block text-sm font-medium text-gray-700">
-            Trading Balance
+            Add  Bonus
           </label>
 
-          <input id="tradingBalance" v-model="selectedUser.tradingBalance" type="number" name="tradingBalance"
+          <input id="tradingBalance" v-model="selectedUser.bonus" type="number" name="tradingBalance"
             class="mt-1 w-full px-3 py-3 border outline-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
         </div>
 
@@ -238,8 +238,8 @@ export default {
           class: 'font-medium text-gray-400 text-sm'
         },
         {
-          key: 'eth',
-          label: 'Etherium',
+          key: 'bonus',
+          label: 'Bonus',
           class: 'font-medium text-gray-400 text-sm'
         },
         {
@@ -356,9 +356,12 @@ export default {
             authorization: 'Bearer ' + accessToken
           },
 
-        }).then(res => res.json())
+        }).then(res => res.json());
+
+
         if (response?.error) {
-          this.$toastr.e(response.errors)
+          this.$toastr.e(response.error)
+
         } else {
           this.usersList = response
           this.totalRows = response.length
@@ -380,6 +383,60 @@ export default {
       this.processing = true
       const accessToken = JSON.parse(window.localStorage.getItem('auth'))
       const user = JSON.parse(window.localStorage.getItem('user'))
+
+      try {
+
+        if(this.selectedUser.profit){
+
+
+
+        const response = await fetch(`${baseUrl}portfolios/${this.selectedUser.top_portfolio.id}/portfolio_interests`,
+          {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({portfolio_interest: {interest: this.selectedUser.profit}})
+          }
+        )
+        const data = await response.json()
+        if (data?.errors) {
+          this.$toastr.e(data.errors[0].message)
+        } else {
+          this.$toastr.s('User Information was updated successfully')
+          this.$bvModal.hide('updateUserInfo')
+        }
+      }
+      else if(this.selectedUser.bonus){
+        const response = await fetch(`${baseUrl}wallets/${this.selectedUser.wallet.id}/bonuses`,
+          {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({bonus: {amount: this.selectedUser.bonus}})
+          }
+        )
+        const data = await response.json()
+        if (data?.errors) {
+          this.$toastr.e(data.errors[0].message)
+        } else {
+          // console.log("first", data)
+          this.$toastr.s('User Bonus was updated successfully')
+          this.$bvModal.hide('updateUserInfo')
+        }
+      }
+      } finally {
+        this.processing = false
+      }
+    },
+
+    async addBonus() {
+      this.processing = true
+      const accessToken = JSON.parse(window.localStorage.getItem('auth'))
+      const user = JSON.parse(window.localStorage.getItem('user'))
       // console.log(this.selectedUser.top_portfolio)
 
       try {
@@ -391,7 +448,7 @@ export default {
               'content-type': 'application/json',
               authorization: 'Bearer ' + accessToken
             },
-            body: JSON.stringify({portfolio_interest: {interest: this.selectedUser.profit}})
+            body: JSON.stringify({portfolio_interest: {interest: this.selectedUser.amount}})
           }
         )
         const data = await response.json()
