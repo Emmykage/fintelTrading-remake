@@ -16,7 +16,7 @@
             </p>
           </div>
           <div>
-            <p>REFERAL CODE: {{ wallet.user?.referral_code }} </p>
+            <p class="hidden md:block">REFERAL CODE: {{ wallet.user?.referral_code }} </p>
 
           </div>
           <div>
