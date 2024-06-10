@@ -16,9 +16,9 @@
       <div class="space-y-1">
         <label class="text-xs text-gray-700 font-medium">Enter Amount:*</label>
         <input v-model="form.amount" class="py-2.5 border rounded-md w-full outline-none pl-6">
-        <span class="text-xs font-medium text-red-500">Note that plan amount must be available in your account balance
+        <span class="text-xs font-medium text-red-500">Note: Account of
           of
-          {{ formatNumberAsDollar(userData?.wallet_balance) ?? '0.00' }}.</span>
+          {{ formatNumberAsDollar(userData?.wallet_balance) ?? '0.00' }} must have a minimum of $1 after purchase</span>
       </div>
       <button :class="[
       !isFormEmpty || processing ? 'opacity-25 cursor-not-allowed' : '',
