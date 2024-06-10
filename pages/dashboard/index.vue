@@ -16,10 +16,15 @@
             </p>
           </div>
           <div>
+            <p>REFERAL CODE: {{ wallet.user?.referral_code }} </p>
+
+          </div>
+          <div>
             <nuxt-link to="/dashboard/deposit" class="bg-black text-white rounded-md px-3 py-2.5">
               Deposit Funds
             </nuxt-link>
           </div>
+
         </div>
         <div class="space-y-6">
           <div class="md:flex items-center gap-x-6 p-3 space-y-6 md:space-y-0">
@@ -196,6 +201,7 @@ export default {
         }
         else {
           this.wallet = response
+          console.log(response)
           this.transactionsList = response.transactions
 
         }

@@ -23,7 +23,10 @@
           <input v-model="updatedUserData.email" type="email" class="py-2 border rounded-md w-full outline-none pl-6" disabled>
           <span class="text-xs text-gray-500">We'll never share your details with anyone else</span>
         </div>
-
+        <div class="space-y-1">
+          <label class="text-xs text-gray-700 font-medium">Referral code:</label>
+          <input v-model="updatedUserData.referral_code" type="text" class="py-2 border rounded-md w-full outline-none pl-6" disabled>
+        </div>
         <div class="space-y-1">
           <label class="text-xs text-gray-700 font-medium">Password:</label>
           <input v-model="updatedUserData.password" type="password" disabled
@@ -123,6 +126,7 @@ export default {
           this.$toastr.e(response.error)
         } else {
           this.updatedUserData = response
+          console.log(response)
         }
       } finally {
         this.loading = false

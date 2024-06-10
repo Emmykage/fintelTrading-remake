@@ -84,7 +84,7 @@
                 Referral Code
               </label>
 
-              <input id="referralCode" v-model="user.referralCode" type="text" name="referralCode"
+              <input id="referralCode" v-model="user.referrer" type="text" name="referralCode"
                 class="mt-1 w-full py-3 pl-3 outline-none border-none rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
             </div>
             <!--
@@ -136,7 +136,7 @@ export default {
         last_name: '',
         email: '',
         password: '',
-        referralCode: ''
+        referrer: ''
       }
     }
   },
