@@ -99,6 +99,10 @@ export default {
           url: '/plans'
         },
         {
+          title: 'Energy Plan',
+          url: '/energy'
+        },
+        {
           title: 'Contact',
           url: '/contact'
         },
