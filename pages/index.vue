@@ -258,7 +258,8 @@ export default {
     this.startSlider()
     this.toggleModal()
 
-    const hasModalBeenShown = sessionStorage.getItem('trackmodal')
+    // const hasModalBeenShown = sessionStorage.getItem('trackmodal')
+    const hasModalBeenShown = true
     if(!hasModalBeenShown){
       this.isModalHidden = false
 

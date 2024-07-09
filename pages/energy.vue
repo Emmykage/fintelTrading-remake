@@ -150,7 +150,7 @@
 
         </div>
 
-        <nuxt-link to="/login" class="self-center  border-white py-2 px-3 rounded inline-block border text-gray-300 bg-blue-700 cursor-pointer ml-12 hover:text-blue-800 hover:bg-white transition-all ease-out duration-300 font-semibold">
+        <nuxt-link to="/login" class="self-center border-gray-300 py-2 px-3 rounded inline-block border text-gray-300 bg-blue-700 cursor-pointer ml-12 hover:text-blue-800 hover:bg-white transition-all ease-out duration-300 font-semibold ">
           Get Started
         </nuxt-link>
 
@@ -162,7 +162,7 @@
 </template>
 <style scoped>
 .bg-hero{
-  background: linear-gradient(rgba(255, 255, 255, 0.473), rgba(255, 255, 255, 0.637)), url('~assets/img/team-meeting.jpg');
+  background: linear-gradient(rgba(255, 255, 255, 0.473), rgba(255, 255, 255, 0.637)), url('~assets/img/renewableenergy.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
