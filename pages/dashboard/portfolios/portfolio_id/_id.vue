@@ -3,6 +3,7 @@
     <Transition name="fade">
       <!-- <b-container> -->
       <section class="text-white">
+        <p class="text-red-400 font-semibold ">10% repatration fee will be incurred</p>
         <div class="flex items-center justify-between my-3">
           <button class="outline-none border bg-gray-200 text-black px-3 py-1 rounded-md text-sm" @click="goBack()">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none"
@@ -15,7 +16,7 @@
 
           </p>
 
-          <a class="text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction()">Profit Repatriation</a>
+          <a class="cursor-pointer rounded text-gray-50 bg-slate-800 py-2 px-4" @click="handleAction()">Profit Repatriation</a>
           <!-- <h2>Parameter {{$route.params.id}}</h2> -->
         </div>
 
@@ -54,7 +55,7 @@
 
             <template #cell(amount)="data">
               <div class="py-4">
-                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'gray' : 'green' }">
+                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'green' : 'gray' }">
                   {{
             formatNumberAsDollar(data?.item?.interest)
           }}
@@ -62,10 +63,10 @@
               </div>
             </template>
             <template #cell(withdrawn)="data">
-              <div class="py-4">
-                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'gray' : 'green' }">
+              <div class="py-4 px-2">
+                <span class="font-medium py-2 text-sm cursor-pointer" :style="{color: data?.item.withdrawn ? 'green' : 'gray' }">
                   {{
-            (data?.item?.withdrawn ? "--" : "profit")
+            (data?.item?.withdrawn ? "&check;" : "--")
           }}
                 </span>
               </div>
@@ -204,7 +205,7 @@ export default {
     handleAction() {
       Swal.fire({
         title: `Withdraw  Portfolio Interest`,
-        text: "Please Note: You won't be able to revert this!",
+        text: "Please Note: You won't be able to revert this! " ,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
