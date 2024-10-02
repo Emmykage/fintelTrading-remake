@@ -192,7 +192,7 @@
       <div id="chart-widget" />
     </div>
     <div class="ad-modal-backdrop" :class="{'hide' : isModalHidden }">
-      <div class="ad-modal bg-blue-100/10 rounded-md">
+      <div class="ad-modal bg-blue-100/10 rounded-md px-5">
         <div class="text-right px-4 py-2">
           <span class="cursor-pointer text-4xl font-semibold block ml-auto w-max bg-gray-50 transition-all ease-out duration-300 hover:scale-110
           <!-- bg-gradient-to-r from-blue-300 to-white -->
@@ -203,6 +203,7 @@
         <!-- <h1 class="text-center font-semibold text-4xl mt-0">Get </h1> -->
         <!-- <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p> -->
         <div class="text-center"><img class="block w-max m-auto" src="~/assets/img/fifteen-off.png" alt=""></div>
+        <h1 class="text-red-300 text-center text-3xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
         <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 15% Bonus On Every Deposit</h1>
       </div>l
     </div>
@@ -226,6 +227,7 @@ export default {
     modToggle: "hide",
       isModalHidden: null,
       // adTracking: false,
+      daysToGo: null,
       activeCarouselIndex: 0,
       tradingWidgetUrl: 'https://webdev.prosp.devexperts.com:8095/widget/vendors.js',
       timer: 0,
@@ -257,15 +259,21 @@ export default {
   mounted () {
     this.startSlider()
     this.toggleModal()
+    this.dateCountdown()
 
     // const hasModalBeenShown = sessionStorage.getItem('trackmodal')
-    const hasModalBeenShown = true
+    const hasModalBeenShown = false
+
+    if(this.dateCountdown() >= 0){
+
+
     if(!hasModalBeenShown){
       this.isModalHidden = false
 
       sessionStorage.setItem('trackmodal', true)
 
     }
+  }
     // sessionStorage.setItem('trackmodal', true)
 
   },
@@ -274,6 +282,18 @@ export default {
 
   },
   methods: {
+
+
+    dateCountdown(){
+      const deadLine = new Date("10/01/2024")
+      const currentdate = new Date()
+
+      const days = Math.floor((deadLine -currentdate)/(1000 * 3600 * 24))
+      this.daysToGo = days
+      return days
+    },
+
+
 
     toggleModal(){
 
@@ -328,7 +348,7 @@ export default {
     flex-direction: column;
     width: 100%;
     max-width: 700px;
-    height: 400px;
+    min-height: 500px;
   }
   .hide{
     pointer-events: none;

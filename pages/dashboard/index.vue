@@ -65,13 +65,13 @@
               </div>
             </div>
           </div>
-          <div class="h-48 relative ">
+          <!-- <div class="h-48 relative ">
             <img class="h-full w-full object-fill" src="~/assets/img/15-percent.webp" alt="fifteen percent off banner">
             <div class="absolute top-0 left-0 w-full h-full bg-gray-700/20 z-10">
               <p class="text-2xl text-gray-100 font-bold text-center bg-gray-800/10 mt-32 uppercase font-serif">              Bonus on Deposits
               </p>
             </div>
-          </div>
+          </div> -->
           <div class=" bg-white py-10 space-y-4 border border-gray-600 h-[400px] overflow-y-auto">
             <h1 class="text-gray-600 font-bold border-b pb-4 pl-6">
               Recent Transactions
