@@ -170,7 +170,7 @@
       class="bg-red-600"
       body-bg-variant="light"
     >
-      <!-- <div class="flex flex-col items-center max-w-lg gap-4 p-6 sm:py-8 sm:px-12">
+      <div class="flex flex-col items-center max-w-lg gap-4 p-6 sm:py-8 sm:px-12">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-40 h-40 fill-current shrink-0 dark:text-violet-400">
           <path d="M68.328,383.063a31.654,31.654,0,0,1,.207-32.118l50.883-86.406,11.516,50.76,31.207-7.08L138.257,202.944,32.983,226.828l7.08,31.207,53.149-12.058L40.96,334.707a64,64,0,0,0,55.149,96.476h82.435l32-32H96.109A31.655,31.655,0,0,1,68.328,383.063Z" />
           <path d="M283.379,79.762l53.747,91.268-49.053-7.653-4.934,31.617L389.8,211.635l16.64-106.66-31.617-4.933-8.873,56.87L310.954,63.524a64,64,0,0,0-110.3,0l-39.939,67.82,10.407,45.39,57.106-96.972a32,32,0,0,1,55.148,0Z" />
@@ -186,7 +186,7 @@
         <button type="button" class="px-7 py-2 font-semibold rounded-full dark:bg-violet-400 dark:text-gray-900" @click="$bvModal.hide('bv-modal-example')">
           Continue
         </button>
-      </div> -->
+      </div>
     </b-modal>
     <div class="flex justify-center items-center w-11/12 mx-auto">
       <div id="chart-widget" />
@@ -202,9 +202,9 @@
         </div>
         <!-- <h1 class="text-center font-semibold text-4xl mt-0">Get </h1> -->
         <!-- <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p> -->
-        <div class="text-center"><img class="block w-max m-auto" src="~/assets/img/fifteen-off.png" alt=""></div>
+        <div class="text-center"><img class="block w-56 m-auto" src="~/assets/img/twenty-off.png" alt=""></div>
         <h1 class="text-red-300 text-center text-3xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
-        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 15% Bonus On Every Deposit</h1>
+        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 20% Bonus On Every Deposit</h1>
       </div>l
     </div>
   </div>
@@ -285,7 +285,7 @@ export default {
 
 
     dateCountdown(){
-      const deadLine = new Date("10/01/2024")
+      const deadLine = new Date("10/30/2024")
       const currentdate = new Date()
 
       const days = Math.floor((deadLine -currentdate)/(1000 * 3600 * 24))
