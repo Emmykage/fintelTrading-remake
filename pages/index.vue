@@ -202,9 +202,9 @@
         </div>
         <!-- <h1 class="text-center font-semibold text-4xl mt-0">Get </h1> -->
         <!-- <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p> -->
-        <div class="text-center"><img class="block w-56 m-auto" src="~/assets/img/twenty-off.png" alt=""></div>
+        <div class="text-center"><img class="block w-96 h-80 m-auto" src="~/assets/img/ten-off.png" alt=""></div>
         <h1 class="text-red-300 text-center text-3xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
-        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 20% Bonus On Every Deposit</h1>
+        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 10% Bonus On Every Deposit</h1>
       </div>l
     </div>
   </div>
@@ -285,7 +285,7 @@ export default {
 
 
     dateCountdown(){
-      const deadLine = new Date("10/30/2024")
+      const deadLine = new Date("12/14/2024")
       const currentdate = new Date()
 
       const days = Math.floor((deadLine -currentdate)/(1000 * 3600 * 24))

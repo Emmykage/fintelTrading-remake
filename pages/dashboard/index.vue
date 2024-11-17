@@ -66,7 +66,7 @@
             </div>
           </div>
           <div class="h-60 relative ">
-            <img class="h-full w-full object-fill" src="~/assets/img/twenty-percent-banner.jpg" alt="fifteen percent off banner">
+            <img class="h-full w-full object-fill" src="~/assets/img/ten-percent.jpg" alt="fifteen percent off banner">
             <div class="absolute top-0 left-0 w-full h-full bg-gray-700/20 z-10">
               <!-- <p class="text-2xl text-gray-100 font-bold text-center bg-gray-800/10 mt-32 uppercase font-serif">              Bonus on Deposits
               </p> -->
