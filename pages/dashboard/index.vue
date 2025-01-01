@@ -93,7 +93,7 @@
                       <th class="p-3">
                         Date
                       </th>
-                      <th class="p-3 text-right">
+                      <th class="p-3  text-left">
                         Amount
                       </th>
                       <th class="p-3">

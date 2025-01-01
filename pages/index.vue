@@ -192,20 +192,41 @@
       <div id="chart-widget" />
     </div>
     <div class="ad-modal-backdrop" :class="{'hide' : isModalHidden }">
-      <div class="ad-modal bg-blue-100/10 rounded-md px-5">
-        <div class="text-right px-4 py-2">
+      <div class="ad-modal mx-2 bg-gray-900 p-2 rounded-md px-3 h-full max-h-[400px] overflow-y-auto ">
+        <div class="text-right px-0 py-2">
           <span class="cursor-pointer text-4xl font-semibold block ml-auto w-max bg-gray-50 transition-all ease-out duration-300 hover:scale-110
           <!-- bg-gradient-to-r from-blue-300 to-white -->
           " @click="toggleModal">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
           </span>
         </div>
-        <!-- <h1 class="text-center font-semibold text-4xl mt-0">Get </h1> -->
-        <!-- <p class="text-center flex justify-center my-4 shadow py-2"><span class="w-40 h-40 shadow text-6xl rounded-full flex justify-center items-center font-semibold border bg-gradient-to-r from-blue-300 to-white scale-up">15%</span></p> -->
-        <div class="text-center"><img class="block w-96 h-80 m-auto" src="~/assets/img/ten-off.png" alt=""></div>
-        <h1 class="text-red-300 text-center text-3xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
-        <h1 class="text-center text-orange-700 text-3xl mt-3 font-bold uppercase">Get 10% Bonus On Every Deposit</h1>
-      </div>l
+
+        <!-- <img src="~/assets/img/info_.webp" alt=""> -->
+        <!-- <h4 class="text-2xl font-bold my-3"> Dear Valued Investor,</h4>
+
+        <p class="text-base font-bold leading-8">
+
+
+
+          Wishing you a Merry Christmas filled with joy, love, and prosperity! We hope this season brings warmth and happiness to you and your loved ones.
+
+          Please be informed that there will be no profit distribution on December 25th and 26th 2024, as the financial markets are closed for the holiday celebrations. Profit distribution will resume as usual on the next business day.
+
+          As part of our festive bonus, all investors will enjoy an instant 15% cash back on deposits made during this period. This is our way of saying thank you for being a valued part of the Fintelvalues family.
+
+          Happy holidays, and we look forward to a prosperous New Year together!
+
+          Warm regards,
+          Support Team
+          Fintelvalues
+          </p> -->
+
+          <div class="text-center"><img class="block w-96 h-60 m-auto" src="~/assets/img/—Pngtree—2025 happy new year design_18774722.png" alt=""></div>
+          <h1 class="text-red-300 text-center text-xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
+          <h1 class="text-center text-orange-700 text-2xl mt-1 font-bold uppercase">Get 15% Bonus On Every Deposit</h1>
+
+
+      </div>
     </div>
   </div>
 
@@ -265,6 +286,7 @@ export default {
     const hasModalBeenShown = false
 
     if(this.dateCountdown() >= 0){
+      // if(true){
 
 
     if(!hasModalBeenShown){
@@ -285,7 +307,7 @@ export default {
 
 
     dateCountdown(){
-      const deadLine = new Date("12/14/2024")
+      const deadLine = new Date("1/30/2025")
       const currentdate = new Date()
 
       const days = Math.floor((deadLine -currentdate)/(1000 * 3600 * 24))
@@ -348,7 +370,6 @@ export default {
     flex-direction: column;
     width: 100%;
     max-width: 700px;
-    min-height: 500px;
   }
   .hide{
     pointer-events: none;
