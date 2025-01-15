@@ -222,7 +222,8 @@
           </p> -->
 
           <div class="text-center">
-            <img class="block w-96 object-contain md:object-fill h-52 md:h-56 m-auto" src="~/assets/img/—Pngtree—2025 happy new year design_18774722.png" alt=""></div>
+            <img class="block w-full max-w-96 object-contain md:object-fill h-52 md:h-56 m-auto" src="~/assets/img/—Pngtree—2025 happy new year design_18774722.png" alt="">
+          </div>
           <h1 class="text-red-300 text-center text-xl font-semibold">You Have {{daysToGo}} {{daysToGo == 1 ? "day" : "days"}} Left to take advantage of this offer</h1>
           <h1 class="text-center text-orange-700 text-2xl mt-1 font-bold uppercase">Get 15% Bonus On Every Deposit</h1>
 

@@ -36,6 +36,8 @@
             <input v-model="form.wallet"
               class="py-3 bg-gray-50 border border-gray-600 text-sm rounded-md w-full outline-none pl-6">
           </div>
+          <p class="text-red-600">Withdrawal limit is linked to account credit level</p>
+
           <div class="w-full pt-6">
             <button :disabled="!isFormEnabled || processing"
               class="w-full text-white disabled:cursor-not-allowed disabled:opacity-25  bg-black py-3 px-3 rounded-md">
